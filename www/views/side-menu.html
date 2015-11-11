@@ -1,0 +1,99 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-balanced">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+   
+      <ion-nav-buttons side="right">
+          <button class="button button-icon icon ion-ios-reload"></button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+    <ion-content has-bouncing="false" scroll="false" class="menu-outer">
+      <div class="row menu-top-options">
+        <div class="col col-top">
+          <ion-list>
+            <ion-item class="heading-item" menu-close ui-sref="app.view1">
+              <div class="row">
+                <div class="col">
+                  <!-- We need a wrapper with width set for the preload image directive -->
+                  <div class="user-image-outer">
+                    <pre-img ratio="_1_1" helper-class="rounded-image">
+                      <img class="user-image" ng-src="img/logo.png" spinner-on-load>
+                  	</pre-img>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h1 class="greeting">HawaiiQpons</h1>
+                  <!--<p class="message">presented by: ThisWeek Publications</p>-->
+                </div>
+              </div>
+            </ion-item>
+            <ion-item ui-sref-active="active" class="item-toggle" menu-close ui-sref="app.view1">
+                 Map View
+                  <label class="toggle toggle-energized">
+                    <input type="checkbox">
+                    <div class="track">
+                      <div class="handle"></div>
+                    </div>
+                  </label>             
+            </ion-item>
+            <ion-item ui-sref-active="active" class="item-toggle" menu-close ui-sref="app.view1">
+                 Use GPS
+                  <label class="toggle toggle-energized">
+                    <input type="checkbox">
+                    <div class="track">
+                      <div class="handle"></div>
+                    </div>
+                  </label>             
+            </ion-item> 
+            <ion-item>
+              Search Radius:
+            </ion-item>
+            <ion-item class="range range-energized">
+              1
+              <input type="range" name="volume" min="0" max="100" value="25">
+              100
+            </ion-item>
+                      
+            <!--
+            <ion-item ui-sref-active="active" class="item-icon-left" menu-close ui-sref="app.view3">
+              <i class="menu-icon icon ion-person-stalker"></i>
+              <h2 class="menu-text">Friends</h2>
+            </ion-item>
+            <ion-item ui-sref-active="active" class="item-icon-left" menu-close ui-sref="app.view4">
+              <i class="menu-icon icon ion-ribbon-b"></i>
+              <h2 class="menu-text">Prices</h2>
+            </ion-item>
+            -->
+          </ion-list>
+        </div>
+      </div>
+      <div class="row menu-bottom-options">
+        <div class="col col-bottom">
+          <ion-list>
+            <!--
+            <ion-item ui-sref-active="active" class="item-icon-left" menu-close ui-sref="app.view5">
+              <i class="menu-icon icon ion-person-add"></i>
+              <h2 class="menu-text">Find Friends</h2>
+            </ion-item>
+            -->
+            <ion-item ui-sref-active="active" class="item-icon-left" menu-close ui-sref="app.view6">
+              <i class="menu-icon icon ion-ios-settings-strong"></i>
+              <h2 class="menu-text">Settings</h2>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

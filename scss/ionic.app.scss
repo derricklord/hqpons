@@ -1,0 +1,31 @@
+// Include Sass mixins
+@import "scss/utils/mixins";
+
+// Include Ionic override variables
+@import "scss/utils/override_variables";
+
+// Include Bourbon
+@import "www/lib/bourbon/app/assets/stylesheets/_bourbon";
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic";
+
+// Include project Sass variables
+@import "scss/common/common.variables";
+@import "scss/side-menu/side-menu.variables";
+
+// Include custom styles
+@import "scss/common/common.styles";
+@import "scss/side-menu/side-menu.styles";
+
+.advertisement{
+	background-color: #fec110;
+	color: #1c5f30;
+	border-radius: 10px;
+	padding: 5px;
+}
+
+.item-thumbnail-left, .item-thumbnail-left .item-content {
+    padding-top: 8px;
+    padding-left: 106px;
+    min-height: 80px;
+}
