@@ -9,7 +9,8 @@
       </ion-nav-buttons>
    
       <ion-nav-buttons side="right">
-          <button class="button button-icon icon ion-ios-reload"></button>
+          <button class="button button-icon icon ion-ios-reload" ng-click="reload()"></button>
+          <button class="button button-icon icon ion-map" ng-click="reload()"></button>
       </ion-nav-buttons>
     </ion-nav-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
@@ -20,7 +21,7 @@
       <div class="row menu-top-options">
         <div class="col col-top">
           <ion-list>
-            <ion-item class="heading-item" menu-close ui-sref="app.view1">
+            <ion-item class="heading-item" menu-close ui-sref="app.main">
               <div class="row">
                 <div class="col">
                   <!-- We need a wrapper with width set for the preload image directive -->
@@ -38,7 +39,7 @@
                 </div>
               </div>
             </ion-item>
-            <ion-item ui-sref-active="active" class="item-toggle" menu-close ui-sref="app.view1">
+            <ion-item ui-sref-active="active" class="item-toggle" menu-close ui-sref="app.main">
                  Map View
                   <label class="toggle toggle-energized">
                     <input type="checkbox">
@@ -47,7 +48,7 @@
                     </div>
                   </label>             
             </ion-item>
-            <ion-item ui-sref-active="active" class="item-toggle" menu-close ui-sref="app.view1">
+            <ion-item ui-sref-active="active" class="item-toggle" menu-close ui-sref="app.main">
                  Use GPS
                   <label class="toggle toggle-energized">
                     <input type="checkbox">
@@ -87,7 +88,7 @@
               <h2 class="menu-text">Find Friends</h2>
             </ion-item>
             -->
-            <ion-item ui-sref-active="active" class="item-icon-left" menu-close ui-sref="app.view6">
+            <ion-item ui-sref-active="active" class="item-icon-left" menu-close ui-sref="app.main">
               <i class="menu-icon icon ion-ios-settings-strong"></i>
               <h2 class="menu-text">Settings</h2>
             </ion-item>

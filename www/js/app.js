@@ -4,6 +4,7 @@ angular.module('hawaiiqpon', [
   'hawaiiqpon.common.directives',
   'hawaiiqpon.coupon.service',
   'hawaiiqpon.coupon.controller',
+  'hawaiiqpon.geolocation',
   'hawaiiqpon.views'
 ])
 .run(function($ionicPlatform) {
@@ -29,47 +30,79 @@ angular.module('hawaiiqpon', [
     templateUrl: "views/side-menu.html"
   })
 
-  .state('app.view1', {
-    url: "/view1",
+  .state('app.main', {
+    url: "/main",
     views: {
       'menuContent': {
-        templateUrl: "views/view-1.html",
+        templateUrl: "views/main.html"
+      }
+    }
+  })
+  
+   .state('app.main.activities', {
+    url: "/activities",
+    views: {
+      'app-activities': {
+        templateUrl: "views/activities.html",
+        controller: 'couponCtrl'
+      }
+    }
+  }) 
+
+  .state('app.main.dining', {
+    url: "/dining",
+    views: {
+      'app-dining': {
+        templateUrl: "views/dining.html",
         controller: 'couponCtrl'
       }
     }
   })
 
-  .state('app.view2', {
-    url: "/view2",
+
+  
+  .state('app.main.shopping', {
+    url: "/shopping",
     views: {
-      'menuContent': {
-        templateUrl: "views/view-2.html"
+      'app-shopping': {
+        templateUrl: "views/shopping.html",
+        controller: 'couponCtrl'
       }
     }
   })
 
-  .state('app.view3', {
-    url: "/view3",
+  .state('app.main.services', {
+    url: "/services",
     views: {
-      'menuContent': {
-        templateUrl: "views/view-3.html"
+      'app-services': {
+        templateUrl: "views/services.html",
+        controller: 'couponCtrl'
       }
     }
   })
 
-  .state('app.view4', {
-    url: "/view4",
+  .state('app.main.favorites', {
+    url: "/favorites",
     views: {
-      'menuContent': {
-        templateUrl: "views/view-4.html"
+      'app-favorites': {
+        templateUrl: "views/favorites.html"
       }
     }
   })
-
+  
+  .state('app.main.details', {
+    url: '/details/:couponId',
+    views: {
+      'tab-chats': {
+        templateUrl: 'templates/details.html',
+        controller: 'couponCtrl'
+      }
+    }
+  })
   ;
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/view1');
+  $urlRouterProvider.otherwise('/app/main');
 })
 
 ;

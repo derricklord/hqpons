@@ -1,43 +1,73 @@
 angular.module('hawaiiqpon.coupon.controller', [])
-.controller('couponCtrl', function($scope, Coupons, $cordovaGeolocation, $ionicLoading,  $state) {
-
-  
+.controller('couponCtrl', function($scope, Coupons, $cordovaGeolocation, $timeout, $ionicLoading, $ionicSideMenuDelegate, $ionicHistory, $state,  GeolocationService) {
+  //Controller Properties
   var map;
   var host = 'http://hawaiiqpon.lordconsulting.net/uploads';
   
-  
+  $scope.coupons = [];
+  $scope.premiumCoupons = [];  
   $scope.settings = {
     gps: true,
     listView: true,
     radius: 25
   }
 
-  //Controller Properties
-
-  $scope.coupons = [];
-  $scope.premiumCoupons = [];
 
 
-  //Show Loading Message
-  $ionicLoading.show({
-    template: 'Finding Deals...'
-  });
   
+
   
+  // Dont drag the menu open when we're panning the map
+  $scope.$on('$ionicView.enter', function() {
+    $ionicHistory.clearHistory();
+    $ionicSideMenuDelegate.canDragContent(false);
+    //Show Loading Message
+    $ionicLoading.show({
+      template: 'Finding Deals...'
+    });
+
+    $timeout(function(){
+      var options = {
+        timeout: 10000,
+        maximumAge: 600000,
+        enableHighAccuracy: false
+      };
+      
+      GeolocationService.getCurrentPosition(options).then(
+            function (position) {
+             //console.log(position.coords);
+              $ionicLoading.hide();
+            },
+            function() {
+              $ionicLoading.hide();
+            }
+    );
+    });
+  });  
+  
+
+
+
+
+  
+  $scope.reload = function(){
+    alert('Changing State');
+    $state.go('app.main');
+  }
 
   $scope.refresh = function(){
      $scope.coupons = [];
      $scope.premiumCoupons = [];
      $scope.$broadcast('scroll.refreshComplete');
+     $state.go('app.main');
      $scope.updateCoupons();
   }
   
-  $scope.updateCoupons = function(){
- 
+  $scope.updateCoupons = function(){      
       Coupons.getCoupons().then(function(coupons){   
               coupons.data.coupons.forEach(function(coupon){
                 coupon.locations.forEach(function(location){
-                      var locDistance = calcDistance($scope.myLoc.lat, $scope.myLoc.long, location.loc.lat, location.loc.long, 'N');
+                      var locDistance = GeolocationService.calcDistance($scope.myLoc.lat, $scope.myLoc.long, location.loc.lat, location.loc.long, 'N');
                       location.distance = locDistance;
                       
                       location.desc = coupon.desc;
@@ -71,13 +101,16 @@ angular.module('hawaiiqpon.coupon.controller', [])
                         location.icon = '/img/markers/General.png';
                       }                     
                       
-                      if(location.distance <= 25 && !location.premium){
-                        $scope.coupons.push(location);
-                      }
-                      
-                      if(location.distance <= 25 && location.premium){
-                        $scope.premiumCoupons.push(location);
-                      }
+
+                        if(location.distance <= 25 && !location.premium){
+                          $scope.coupons.push(location);
+                        }
+                        
+                        if(location.distance <= 25 && location.premium){
+                          $scope.premiumCoupons.push(location);
+                        }                        
+
+
                      
                 });
               });
