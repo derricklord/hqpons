@@ -7,7 +7,8 @@ angular.module('hawaiiqpon', [
   'hawaiiqpon.geolocation',
   'hawaiiqpon.views'
 ])
-.run(function($ionicPlatform) {
+.constant('_', 'window._')
+.run(function($ionicPlatform, $rootScope) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -18,6 +19,7 @@ angular.module('hawaiiqpon', [
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+    $rootScope._ = _;
   });
 })
 
@@ -94,7 +96,7 @@ angular.module('hawaiiqpon', [
     url: '/details/:couponId',
     views: {
       'tab-chats': {
-        templateUrl: 'templates/details.html',
+        templateUrl: 'views/details.html',
         controller: 'couponCtrl'
       }
     }

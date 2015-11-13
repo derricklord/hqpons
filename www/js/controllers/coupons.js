@@ -13,9 +13,6 @@ angular.module('hawaiiqpon.coupon.controller', [])
   }
 
 
-
-  
-
   
   // Dont drag the menu open when we're panning the map
   $scope.$on('$ionicView.enter', function() {
@@ -35,8 +32,15 @@ angular.module('hawaiiqpon.coupon.controller', [])
       
       GeolocationService.getCurrentPosition(options).then(
             function (position) {
-             //console.log(position.coords);
-              $ionicLoading.hide();
+             //console.log(position.coords.latitude);
+             $scope.myLoc = {
+               lat: position.coords.latitude,
+               long: position.coords.longitude
+             }
+             
+             $scope.updateCoupons(); 
+             $ionicLoading.hide();
+            
             },
             function() {
               $ionicLoading.hide();
@@ -46,25 +50,12 @@ angular.module('hawaiiqpon.coupon.controller', [])
   });  
   
 
-
-
-
-  
-  $scope.reload = function(){
-    alert('Changing State');
-    $state.go('app.main');
-  }
-
-  $scope.refresh = function(){
-     $scope.coupons = [];
-     $scope.premiumCoupons = [];
-     $scope.$broadcast('scroll.refreshComplete');
-     $state.go('app.main');
-     $scope.updateCoupons();
-  }
-  
   $scope.updateCoupons = function(){      
-      Coupons.getCoupons().then(function(coupons){   
+      Coupons.getCoupons().then(function(coupons){ 
+              
+              var data = _(coupons.data.coupons).where({active:true});
+              console.log(data);
+
               coupons.data.coupons.forEach(function(coupon){
                 coupon.locations.forEach(function(location){
                       var locDistance = GeolocationService.calcDistance($scope.myLoc.lat, $scope.myLoc.long, location.loc.lat, location.loc.long, 'N');
@@ -119,6 +110,8 @@ angular.module('hawaiiqpon.coupon.controller', [])
       });   
   }
   
+  
+  /*
   $scope.init = function(){
     $cordovaGeolocation
       .getCurrentPosition({timeout: 6000, enableHighAccuracy: true})
@@ -142,9 +135,9 @@ angular.module('hawaiiqpon.coupon.controller', [])
             // error
       });
   }
+  */
 
-
-
+  /*
   function calcDistance(lat1, lon1, lat2, lon2, unit) {
           var radlat1 = Math.PI * lat1/180;
           var radlat2 = Math.PI * lat2/180;
@@ -160,9 +153,9 @@ angular.module('hawaiiqpon.coupon.controller', [])
           if (unit=="N") { dist = dist * 0.8684 };
           return Math.round(dist*100)/100;
   } 
+  */
  
  
- 
-  $scope.init(); 
+  //$scope.init(); 
    
 });
