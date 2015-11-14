@@ -4,10 +4,16 @@ angular.module('hawaiiqpon', [
   'hawaiiqpon.common.directives',
   'hawaiiqpon.coupon.service',
   'hawaiiqpon.coupon.controller',
+  'hawaiiqpon.sidemenu.controller',  
   'hawaiiqpon.geolocation',
   'hawaiiqpon.views'
 ])
 .constant('_', 'window._')
+.value('Settings', {
+    gps: true,
+    listView: true,
+    radius: 25  
+})
 .run(function($ionicPlatform, $rootScope) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -29,7 +35,8 @@ angular.module('hawaiiqpon', [
   .state('app', {
     url: "/app",
     abstract: true,
-    templateUrl: "views/side-menu.html"
+    templateUrl: "views/side-menu.html",
+    controller: "sideMenuCtrl"
   })
 
   .state('app.main', {
@@ -95,9 +102,8 @@ angular.module('hawaiiqpon', [
   .state('app.main.details', {
     url: '/details/:couponId',
     views: {
-      'tab-chats': {
-        templateUrl: 'views/details.html',
-        controller: 'couponCtrl'
+      'app-offer': {
+        templateUrl: 'views/details.html'
       }
     }
   })
