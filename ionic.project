@@ -1,6 +1,6 @@
 {
   "name": "ionSideMenu-2",
-  "app_id": "",
+  "app_id": "6a036389",
   "gulpStartupTasks": [
     "sass",
     "watch",

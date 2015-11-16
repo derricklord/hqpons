@@ -10,11 +10,13 @@ angular.module('hawaiiqpon', [
 ])
 .constant('_', 'window._')
 .value('Settings', {
-    gps: true,
+    gps: false,
     listView: true,
-    radius: 25  
+    radius: 25 ,
+    filter: '',
+    location: {lat:'21.3136151', long: '-157.84803639999998'}
 })
-.run(function($ionicPlatform, $rootScope) {
+.run(function($ionicPlatform, $rootScope, Settings, GeolocationService, $timeout, $ionicLoading) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -25,7 +27,31 @@ angular.module('hawaiiqpon', [
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+    
     $rootScope._ = _;
+    /*
+    var options = {
+      timeout: 60000,
+      maximumAge: 600000,
+      enableHighAccuracy: true
+    };
+
+    
+    GeolocationService.getCurrentPosition(options).then(
+            function (position) {
+              Settings.location = {
+                  lat: position.coords.latitude,
+                  long: position.coords.longitude
+                  };
+              Settings.gps = true;    
+
+            },
+            function() {
+                console.log('Failed to load position');
+                Settings.gps = false;
+            }
+      ); 
+      */        
   });
 })
 
@@ -38,7 +64,17 @@ angular.module('hawaiiqpon', [
     templateUrl: "views/side-menu.html",
     controller: "sideMenuCtrl"
   })
-
+  
+  .state('favorites', {
+    url: "/favorites",
+    templateUrl: "views/favorites.html",
+  })
+  
+  .state('splash', {
+    url: "/splash",
+    templateUrl: "views/splash.html",
+  }) 
+  
   .state('app.main', {
     url: "/main",
     views: {
@@ -47,7 +83,17 @@ angular.module('hawaiiqpon', [
       }
     }
   })
-  
+
+  .state('app.main.all', {
+    url: "/all",
+    views: {
+      'app-all': {
+        templateUrl: "views/all.html",
+        controller: 'couponCtrl'
+      }
+    }
+  }) 
+ 
    .state('app.main.activities', {
     url: "/activities",
     views: {
@@ -88,17 +134,7 @@ angular.module('hawaiiqpon', [
         controller: 'couponCtrl'
       }
     }
-  })
-
-  .state('app.main.favorites', {
-    url: "/favorites",
-    views: {
-      'app-favorites': {
-        templateUrl: "views/favorites.html"
-      }
-    }
-  })
-  
+  })  
   .state('app.main.details', {
     url: '/details/:couponId',
     views: {
@@ -110,7 +146,9 @@ angular.module('hawaiiqpon', [
   ;
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/main');
+  //$urlRouterProvider.otherwise('/app/main/all');
+   $urlRouterProvider.otherwise('/splash');
+
 })
 
 ;

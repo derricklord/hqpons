@@ -1,10 +1,28 @@
 <ion-view view-title="Favorites">
+ <ion-nav-bar class="bar-balanced">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-ios-arrow-back" menu-toggle="left" ui-sref="app.main">
+          Back
+        </button>
+      </ion-nav-buttons>
+   
+      <ion-nav-buttons side="right">
+          <button class="button button-icon icon ion-map" ng-click="showMap()"></button>
+      </ion-nav-buttons>
+      
+      <ion-nav-buttons side="right">
+          <button class="button button-icon icon ion-android-favorite-outline" ui-sref="favorites"></button>
+      </ion-nav-buttons>
+
+  </ion-nav-bar>
   <ion-content>
     <!-- Display message when no favorites exist -->
     <div class="vertical-center-container" >
       <div class="vertical-center text-center">
         <h1><i class="icon ion-heart-broken assertive"></i></h1>
-        <p>Looks like you haven't favorited anything yet...</p>
+        <p>Looks like you haven't added any favorites...</p>
       </div>
     </div>
   </ion-content>

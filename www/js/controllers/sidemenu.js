@@ -1,10 +1,11 @@
 angular.module('hawaiiqpon.sidemenu.controller', [])
-.controller('sideMenuCtrl', function($scope, Settings) {
+.controller('sideMenuCtrl', function($scope, $state, Settings) {
 
   $scope.settings = {
-    gps: true,
-    listView: true,
-    radius: 25
+    gps: Settings.gps,
+    listView: Settings.listView,
+    radius: Settings.radius,
+    location: Settings.location
   }
 
   $scope.$watch('settings', function(){
@@ -14,6 +15,10 @@ angular.module('hawaiiqpon.sidemenu.controller', [])
   }, true);
   
   $scope.showMap = function(){
-    alert("Showing Map");
+    alert('Current location: ' + Settings.location.lat + ' , ' + Settings.location.long);
+  }
+  
+  $scope.showFavorites = function(){
+
   }
 });

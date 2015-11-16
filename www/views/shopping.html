@@ -3,7 +3,7 @@
     <ion-refresher pulling-text="Pull to refresh..." on-refresh="refresh()">
     </ion-refresher>    
     <ion-list class="list"> 
-        <a class="item item-thumbnail-left" href="#"  ng-click="openOffer(coupon)" ng-repeat="coupon in premiumCoupons | orderBy:'distance'">
+        <a class="item item-thumbnail-left" href="#"  ng-click="openOffer(coupon)" ng-repeat="coupon in premiumCoupons | filter: 'Shopping' | orderBy:'distance'">
         <img ng-if="coupon.hasImage" ng-src="http://hawaiiqpon.lordconsulting.net/uploads/{{coupon.img}}" style="height:auto; width:50%;">
         <img ng-if="!coupon.hasImage" ng-src="img/logo.png" style="height:auto; width:50%;">
         <h3>{{coupon.vendor}} <span class="advertisement">Ad</span></h3>
@@ -11,7 +11,7 @@
         <p>Distance: {{coupon.distance}} mile(s)</p>
         </a>  
                           
-        <a class="item item-thumbnail-left" href="#"  ng-click="openOffer(coupon)" ng-repeat="coupon in coupons | orderBy:'distance'">
+        <a class="item item-thumbnail-left" href="#"  ng-click="openOffer(coupon)" ng-repeat="coupon in coupons  | filter: 'Shopping'  | orderBy:'distance'">
         <img ng-if="coupon.hasImage" ng-src="http://hawaiiqpon.lordconsulting.net/uploads/{{coupon.img}}" style="height:auto; width:50%;">
         <img ng-if="!coupon.hasImage" ng-src="img/logo.png" style="height:auto; width:50%;">
         <h3>{{coupon.vendor}} </h3>

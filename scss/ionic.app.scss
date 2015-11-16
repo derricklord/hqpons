@@ -29,3 +29,198 @@
     padding-left: 106px;
     min-height: 80px;
 }
+
+.green{
+	color: #1c5f30;
+}
+
+.yellow{
+	color: #fec110;
+}
+
+.welcome-view {
+  background-color: #fcfcfc; }
+  .welcome-view ion-content {
+    top: 0px !important; }
+  .welcome-view .multi-bg-outer {
+    z-index: 0; }
+  .welcome-view .top-content {
+    height: 66%; }
+    .welcome-view .top-content .app-copy {
+      text-align: center;
+      padding-top: 20vh; }
+    .welcome-view .top-content .app-logo {
+      font-size: 50px;
+      font-family: 'Lato';
+      font-weight: 600;
+      font-style: italic;
+      /*color: $welcome-color;*/
+      color: darkseagreen; }
+    .welcome-view .top-content .app-tagline {
+      font-size: 16px;
+      margin-top: 20px;
+      color: rgba(111, 169, 111, 0.8); }
+  .welcome-view .bottom-content {
+    height: 34%;
+    margin: 0px; }
+    .welcome-view .bottom-content .facebook-sign-in, .welcome-view .bottom-content .create-account {
+      border-radius: 4px;
+      margin: 10px 12vw;
+      font-size: 18px; }
+    .welcome-view .bottom-content .facebook-sign-in, .welcome-view .bottom-content .dont-have-facebook, .welcome-view .bottom-content .create-account, .welcome-view .bottom-content .have-account {
+      margin-bottom: 20px; }
+    .welcome-view .bottom-content .facebook-sign-in {
+      color: rgba(255, 255, 255, 0.9);
+      /*background-color: rgba($welcome-facebook-sign-in-bg, .98);*/
+      background-color: rgba(143, 188, 143, 0.98);
+      /*border-color: rgba(darken($welcome-facebook-sign-in-bg, 1), .9);*/
+      border-color: rgba(140, 186, 140, 0.9); }
+    .welcome-view .bottom-content .create-account {
+      color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(255, 76, 76, 0.98);
+      border-color: rgba(255, 71, 71, 0.9); }
+    .welcome-view .bottom-content .dont-have-facebook, .welcome-view .bottom-content .have-account {
+      color: rgba(111, 169, 111, 0.8);
+      font-size: 16px; }
+    .welcome-view .bottom-content .legal-notice {
+      color: darkseagreen;
+      margin: 10px 12vw;
+      text-align: center; }
+      .welcome-view .bottom-content .legal-notice a {
+        text-decoration: none;
+        font-weight: 600;
+        color: darkseagreen; }
+		
+.auth-view {
+  background-color: #fcfcfc; }
+  .auth-view ion-nav-bar ion-header-bar {
+    background-color: #fcfcfc !important;
+    background: #fcfcfc !important;
+    border: none !important;
+    background-size: 0px !important; }
+  .auth-view ion-nav-bar * {
+    color: #333333; }
+    .auth-view ion-nav-bar * .buttons button::before {
+      color: #333333; }
+  .auth-view .form-heading {
+    height: 20%; }
+  .auth-view .form-separator {
+    padding: 0px 10px;
+    margin: 10px 0px; }
+  .auth-view .form-wrapper {
+    height: 80%;
+    margin: 0px; }
+    .auth-view .form-wrapper input::-webkit-input-placeholder {
+      color: #999999; }
+    .auth-view .form-wrapper input::-moz-placeholder {
+      color: #999999; }
+    .auth-view .form-wrapper input:-moz-placeholder {
+      color: #999999; }
+    .auth-view .form-wrapper input:-ms-input-placeholder {
+      color: #999999; }
+  .auth-view .form-title {
+    color: #333333;
+    font-size: 22px;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 20px; }
+  .auth-view .form-sub-title {
+    text-align: center;
+    color: gray;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 20px; }
+  .auth-view .social-sign-up.button-bar > .button:before {
+    font-size: 28px; }
+  .auth-view .social-sign-up.button-bar > .button:first-child {
+    border-radius: 6px 0px 0px 6px; }
+  .auth-view .social-sign-up.button-bar > .button:last-child {
+    border-radius: 0px 6px 6px 0px; }
+  .auth-view .social-sign-up .ion-social-facebook {
+    background: #294886; }
+  .auth-view .social-sign-up .ion-social-twitter {
+    background: #00a3dc; }
+  .auth-view .separator-mark {
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #999999;
+    font-size: 16px; }
+  .auth-view .separator-line {
+    width: -webkit-calc(50vw - 35px);
+    width: calc(50vw - 35px);
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid rgba(153, 153, 153, 0.8);
+    padding: 0;
+    margin: 15px 0px; }
+  .auth-view .form-fields-outer {
+    margin: 0px;
+    background-color: #fcfcfc; }
+    .auth-view .form-fields-outer .row, .auth-view .form-fields-outer .col {
+      padding: 0px; }
+    .auth-view .form-fields-outer .multi-inputs .col .item.item-input {
+      border-radius: 0px; }
+    .auth-view .form-fields-outer .multi-inputs .col:first-child .item.item-input {
+      border-right: none; }
+    .auth-view .form-fields-outer .multi-inputs:first-child .col:first-child .item.item-input {
+      border-top-left-radius: 2px; }
+    .auth-view .form-fields-outer .multi-inputs:first-child .col:last-child .item.item-input {
+      border-top-right-radius: 2px; }
+    .auth-view .form-fields-outer .multi-inputs .item.item-input .multi-input {
+      padding-right: 16px; }
+    .auth-view .form-fields-outer .login.button, .auth-view .form-fields-outer .sign-up.button, .auth-view .form-fields-outer .recover-password {
+      color: #FF4C4C;
+      text-transform: uppercase;
+      font-weight: 500; }
+  .auth-view .message {
+    text-align: center;
+    color: gray; }
+  .auth-view .message.error:before {
+    content: '*';
+    color: #FF4C4C;
+    text-shadow: 1px 1px 0px rgba(229, 0, 0, 0.3);
+    margin-right: 5px;
+    font-size: 20px; }
+  .auth-view .alternative-actions {
+    margin-top: 20px; }
+    .auth-view .alternative-actions .button {
+      color: gray;
+      font-size: 16px; }
+  .auth-view .show-hide-input {
+    display: inherit;
+    width: 100%; }
+  .auth-view .toggle-view-anchor {
+    position: absolute;
+    top: 6px;
+    right: 0px;
+    height: 34px;
+    line-height: 34px;
+    padding-right: 8px; }
+    .auth-view .toggle-view-anchor * {
+      color: #c9c9c9 !important;
+      display: block;
+      font-size: 24px;
+      width: 45px;
+      text-align: center;
+      font-weight: 500; }
+      
+      
+.side_qpon {
+    /*font-size: 50px;*/
+    font-family: 'Lato';
+    font-weight: 600;
+    font-style: italic;
+    /* color: $welcome-color; */
+    color: white;
+}
+
+.title{
+    font-size: 30px;
+    font-family: 'Lato';
+    font-style: italic;
+    color: white;
+}

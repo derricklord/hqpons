@@ -9,8 +9,13 @@
       </ion-nav-buttons>
    
       <ion-nav-buttons side="right">
-          <button class="button button-icon icon ion-map" ng-click="showMap()"></button>
+          <button class="button button-icon icon ion-map" menu-close ng-click="showMap()"></button>
       </ion-nav-buttons>
+      
+      <ion-nav-buttons side="right">
+          <button class="button button-icon icon ion-android-favorite-outline" menu-close ui-sref="favorites"></button>
+      </ion-nav-buttons>
+
     </ion-nav-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
@@ -33,11 +38,11 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <h1 class="greeting">HawaiiQpons</h1>
-                  <!--<p class="message">presented by: ThisWeek Publications</p>-->
+                  <h1 class="side_qpon">HawaiiQpons</h1>
                 </div>
               </div>
             </ion-item>
+            <!--
             <ion-item ui-sref-active="active" class="item-toggle">
                  Map View
                   <label class="toggle toggle-energized">
@@ -56,42 +61,29 @@
                     </div>
                   </label>             
             </ion-item> 
+            -->
             <ion-item>
-              Search Radius:
+              Search Radius: {{settings.radius}}
             </ion-item>
             <ion-item class="range range-energized">
               1
               <input type="range" name="volume" min="0" max="100" value="25" ng-model="settings.radius">
               100
             </ion-item>
-                      
-            <!--
-            <ion-item ui-sref-active="active" class="item-icon-left" menu-close ui-sref="app.view3">
-              <i class="menu-icon icon ion-person-stalker"></i>
-              <h2 class="menu-text">Friends</h2>
-            </ion-item>
-            <ion-item ui-sref-active="active" class="item-icon-left" menu-close ui-sref="app.view4">
-              <i class="menu-icon icon ion-ribbon-b"></i>
-              <h2 class="menu-text">Prices</h2>
-            </ion-item>
-            -->
           </ion-list>
         </div>
       </div>
+      <!--
       <div class="row menu-bottom-options">
         <div class="col col-bottom">
           <ion-list>
-            <ion-item style="color:white;">
-              <h3>{{settings.gps}}</h3>
-              <h3>{{settings.listView}}</h3>
-              <h3>{{settings.radius}}</h3>
+            <ion-item style="color:white;">-->
+             <!-- <h3>{{settings.gps}}</h3>-->
+              <!--<h3>{{settings.listView}}</h3>-->
+              <!--<h3>{{settings.radius}}</h3>-->
+              <!--<h3>{{settings.location}}</h3>-->
+        <!--
             </ion-item>
-            <!--
-            <ion-item ui-sref-active="active" class="item-icon-left" menu-close ui-sref="app.view5">
-              <i class="menu-icon icon ion-person-add"></i>
-              <h2 class="menu-text">Find Friends</h2>
-            </ion-item>
-            -->
             <ion-item ui-sref-active="active" class="item-icon-left" menu-close ui-sref="app.main">
               <i class="menu-icon icon ion-ios-settings-strong"></i>
               <h2 class="menu-text">Settings</h2>
@@ -99,6 +91,7 @@
           </ion-list>
         </div>
       </div>
+      -->
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>
