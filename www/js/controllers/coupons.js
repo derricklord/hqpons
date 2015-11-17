@@ -19,13 +19,31 @@ angular.module('hawaiiqpon.coupon.controller', [])
   //Refresh Coupons
   $scope.refresh = function(){
     $scope.$broadcast('scroll.refreshComplete');
-    $scope.updateCoupons();
+    $ionicLoading.show({
+      template: '<ion-spinner></ion-spinner> <p>Finding Deals...</p>'
+    });
+    var data = [];
+    var premiumData = [];
+    var tempCoupons = Coupons.refreshCoupons();
+    tempCoupons.forEach(function(coupon){
+        if(coupon.premium){
+          premiumData.push(coupon);
+        }
+        if(!coupon.premium){
+          data.push(coupon);
+        }
+    });
+    $scope.coupons = data;
+    $scope.premiumCoupons = premiumData;  
+    $ionicLoading.hide();
+    console.log($scope.coupons);
+    
+    //$scope.updateCoupons();
   }
   
 
   //Update Coupons
-
-  $scope.updateCoupons = function(category){  
+  $scope.updateCoupons = function(){  
     $ionicLoading.show({
       template: '<ion-spinner></ion-spinner> <p>Finding Deals...</p>'
     });
@@ -65,5 +83,42 @@ angular.module('hawaiiqpon.coupon.controller', [])
           });
      });
   }  
+})
+.controller('detailsCtrl', function($scope, $stateParams, Coupons) {
+    var Id = $stateParams.id;
+    $scope.offer = Coupons.getCoupon(Id);
+    $scope.windowOptions = {
+        visible: true
+    };
+    $scope.map = { center: { latitude: $scope.offer.loc.lat , longitude: $scope.offer.loc.long }, zoom: 15 };
+    
+    $scope.marker = {
+      id: 0,
+      coords: {
+        latitude: $scope.offer.loc.lat,
+        longitude: $scope.offer.loc.long
+      },
+      options: { draggable: false, icon: 'img/marker.png' }
+      /*
+      events: {
+        dragend: function (marker, eventName, args) {
+          $log.log('marker dragend');
+          var lat = marker.getPosition().lat();
+          var lon = marker.getPosition().lng();
+          $log.log(lat);
+          $log.log(lon);
+
+          $scope.marker.options = {
+            draggable: true,
+            labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+            labelAnchor: "100 0",
+            labelClass: "marker-labels"
+          };
+        }
+      }
+      */
+    };   
+    
 });
+
 

@@ -1,5 +1,53 @@
-<ion-view view-title="Dining">
-  <ion-content>
-    
-  </ion-content>
+ <ion-view view-title="{{offer.vendor}}">
+  <ion-nav-bar class="bar-balanced">
+      <!--
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+      -->
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-ios-arrow-back" menu-toggle="left" ui-sref="app.main">
+          Back 
+        </button>
+      </ion-nav-buttons>
+  </ion-nav-bar>   
+  <ion-content>   
+      <div class="list card">
+          <div class="item item-image" style="height: 220px;">
+            <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+              <ui-gmap-marker coords="marker.coords" options="marker.options"  idkey="marker.id">
+                <!--
+                <ui-gmap-window options="windowOptions">
+                  <div>{{offer.category}}</div>
+                </ui-gmap-window>
+                -->
+              </ui-gmap-marker>
+            </ui-gmap-google-map>
+          </div> 
+          <div class="item item-body" style="background-color: green; color: white; height: 100px; padding: 3px;">
+            <h2 style="text-align: center; color: white;">{{offer.desc}}</h2>
+            <h3 style="text-align: center; color: white;">exp. {{offer.expiration| date:'shortDate'}}</h3>
+          </div>                     
+          <div class="item item-image" style="height: 130px;">
+            <img ng-if="offer.hasImage" ng-src="http://hawaiiqpon.lordconsulting.net/uploads/{{offer.img}}" style="width:40%; margin: 0 auto; text-align: center; margin-top:5px;">
+            <img ng-if="!offer.hasImage" ng-src="img/logo.png" style="height:auto; width:40%; margin: 0 auto; text-align: center;">
+          </div>
+  
+                
+          <div class="item">
+            <p class="card-description" >
+                <h2 style="text-align: center;">{{offer.vendor}}</h2>
+                <h4 style="text-align: center;">{{offer.address}}</h4>
+                <h4 style="text-align: center;"><a href="#" ng-click="launch(offer.vendor_url)" >Website</a></h4>
+                <h4 style="text-align: center;"><a href="tel:{{offer.vendor_phone}}" target="_blank">{{offer.vendor_phone | tel}}</a></h4>  
+            </p>
+          </div>
+          
+          <div class="item">     
+            <p>
+              <h4 style="text-align: center;">{{offer.desc2}} </h4>
+              <h4 style="text-align: center;">CODE: {{offer.promo_code}}</h4> 
+            </p>  
+          </div>
+      </div> 
+  </ion-content>   
 </ion-view>

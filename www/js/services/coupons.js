@@ -2,9 +2,13 @@
 angular.module('hawaiiqpon.coupon.service', [])
     .service('Coupons', function($http, $q, Settings) {
         var HOST = 'http://hawaiiqpon.lordconsulting.net/api/coupons/all';
+        var IMG = 'http://hawaiiqpon.lordconsulting.net/uploads';
+        var cpnData = [];
         
         return{
-            getCoupons: getCoupons
+            getCoupons: getCoupons,
+            getCoupon: getCoupon,
+            refreshCoupons: refreshCoupons,
         }
         
         function cleanData(data, myLoc){
@@ -29,7 +33,7 @@ angular.module('hawaiiqpon.coupon.service', [])
                         
                         if(coupon.img){
                             location.hasImage = true;
-                            location.img =  coupon.img;
+                            location.img = coupon.img;
                         }else{
                             location.hasImage = false;
                             location.img = 'img/twlogo.png'
@@ -44,10 +48,7 @@ angular.module('hawaiiqpon.coupon.service', [])
                             location.category = 'General';
                             location.icon = '/img/markers/General.png';
                         }                     
-                                   
-                        if(location.distance <= Settings.radius){
-                            coupons.push(location);
-                        }   
+                        coupons.push(location);             
                     });
                 });               
                         
@@ -78,13 +79,36 @@ angular.module('hawaiiqpon.coupon.service', [])
             
             $http.get(HOST)
                 .success(function(data){
+                    var nearby = [];
                     var coupons = cleanData(data, location);
-                    deferred.resolve(coupons);
+                    
+                    cpnData = coupons;
+                    cpnData.forEach(function(c){
+                        if(c.distance <= Settings.radius){
+                            nearby.push(c);
+                        }                         
+                    });
+
+                    deferred.resolve(nearby);
                 })
                 .error(function(){
                     deferred.reject();
                 });
              return deferred.promise;
+        }
+        
+        function refreshCoupons(){
+            if(cpnData.length > 0){
+                return cpnData;
+            }
+        }
+        
+        function getCoupon(Id){
+            for(var i=0; i<cpnData.length; i++){
+                if(cpnData[i]._id == Id){
+                    return cpnData[ i ];
+                }
+            }            
         }
 
     });

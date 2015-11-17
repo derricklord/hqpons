@@ -1,7 +1,9 @@
 angular.module('hawaiiqpon', [
   'ionic',
   'ngCordova',
+  'uiGmapgoogle-maps',
   'hawaiiqpon.common.directives',
+  'hawaiiqpon.common.filters',
   'hawaiiqpon.coupon.service',
   'hawaiiqpon.coupon.controller',
   'hawaiiqpon.sidemenu.controller',  
@@ -135,14 +137,11 @@ angular.module('hawaiiqpon', [
       }
     }
   })  
-  .state('app.main.details', {
-    url: '/details/:couponId',
-    views: {
-      'app-offer': {
-        templateUrl: 'views/details.html'
-      }
-    }
-  })
+ 	.state('details', {
+		url: "/details/:id",
+		templateUrl: 'views/details.html',
+		controller: 'detailsCtrl'
+	})
   ;
 
   // if none of the above states are matched, use this as the fallback
