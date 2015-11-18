@@ -2,6 +2,7 @@ angular.module('hawaiiqpon', [
   'ionic',
   'ngCordova',
   'uiGmapgoogle-maps',
+  'ngMap',
   'LocalStorageModule',
   'hawaiiqpon.common.directives',
   'hawaiiqpon.common.filters',

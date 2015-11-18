@@ -8,9 +8,6 @@
         </button>
       </ion-nav-buttons>
    
-      <ion-nav-buttons side="right">
-          <button class="button button-icon icon ion-map" menu-close ng-click="showMap()"></button>
-      </ion-nav-buttons>
       
       <ion-nav-buttons side="right">
           <button class="button button-icon icon ion-android-favorite-outline" menu-close ui-sref="favorites"></button>
@@ -25,6 +22,7 @@
       <div class="row menu-top-options">
         <div class="col col-top">
           <ion-list>
+            
             <ion-item class="heading-item" menu-close>
               <div class="row">
                 <div class="col">
@@ -42,26 +40,7 @@
                 </div>
               </div>
             </ion-item>
-            <!--
-            <ion-item ui-sref-active="active" class="item-toggle">
-                 Map View
-                  <label class="toggle toggle-energized">
-                    <input type="checkbox" ng-model="settings.listView">
-                    <div class="track">
-                      <div class="handle"></div>
-                    </div>
-                  </label>             
-            </ion-item>
-            <ion-item ui-sref-active="active" class="item-toggle">
-                 Use GPS
-                  <label class="toggle toggle-energized">
-                    <input type="checkbox" ng-model="settings.gps">
-                    <div class="track">
-                      <div class="handle"></div>
-                    </div>
-                  </label>             
-            </ion-item> 
-            -->
+            
             <ion-item>
               Search Radius: {{settings.radius}}
             </ion-item>
@@ -70,28 +49,10 @@
               <input type="range" name="volume" min="0" max="100" value="25" ng-model="settings.radius">
               100
             </ion-item>
+            
           </ion-list>
         </div>
       </div>
-      <!--
-      <div class="row menu-bottom-options">
-        <div class="col col-bottom">
-          <ion-list>
-            <ion-item style="color:white;">-->
-             <!-- <h3>{{settings.gps}}</h3>-->
-              <!--<h3>{{settings.listView}}</h3>-->
-              <!--<h3>{{settings.radius}}</h3>-->
-              <!--<h3>{{settings.location}}</h3>-->
-        <!--
-            </ion-item>
-            <ion-item ui-sref-active="active" class="item-icon-left" menu-close ui-sref="app.main">
-              <i class="menu-icon icon ion-ios-settings-strong"></i>
-              <h2 class="menu-text">Settings</h2>
-            </ion-item>
-          </ion-list>
-        </div>
-      </div>
-      -->
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>

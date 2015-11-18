@@ -85,8 +85,17 @@ angular.module('hawaiiqpon.coupon.controller', [])
      });
   }  
 })
-.controller('detailsCtrl', function($scope, $stateParams, Coupons, Settings) {
+.controller('detailsCtrl', function($scope, $stateParams, Coupons, Settings, NgMap) {
     var Id = $stateParams.id;
+    $scope.googleMapsUrl="http://maps.google.com/maps/api/js?v=3.20&client=XXXXenter-api-keyXXXX";
+    
+    NgMap.getMap().then(function(map) {
+      console.log(map.getCenter());
+      console.log('markers', map.markers);
+      console.log('shapes', map.shapes);
+    });
+    
+    
     $scope.offer = Coupons.getCoupon(Id);
     $scope.windowOptions = {
         visible: true
@@ -106,7 +115,6 @@ angular.module('hawaiiqpon.coupon.controller', [])
       if(offer){
         Settings.favorites.push(offer);
       }
-      console.log(Settings.favorites);
     }
 })
 
