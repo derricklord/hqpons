@@ -15,11 +15,6 @@
           <div class="item item-image" style="height: 220px;">
             <ui-gmap-google-map center='map.center' zoom='map.zoom'>
               <ui-gmap-marker coords="marker.coords" options="marker.options"  idkey="marker.id">
-                <!--
-                <ui-gmap-window options="windowOptions">
-                  <div>{{offer.category}}</div>
-                </ui-gmap-window>
-                -->
               </ui-gmap-marker>
             </ui-gmap-google-map>
           </div> 
@@ -30,6 +25,7 @@
           <div class="item item-image" style="height: 130px;">
             <img ng-if="offer.hasImage" ng-src="http://hawaiiqpon.lordconsulting.net/uploads/{{offer.img}}" style="width:40%; margin: 0 auto; text-align: center; margin-top:5px;">
             <img ng-if="!offer.hasImage" ng-src="img/logo.png" style="height:auto; width:40%; margin: 0 auto; text-align: center;">
+            <a ng-click="addFavorite(offer)"><i class="icon ion-android-favorite-outline"></i></a>
           </div>
   
                 

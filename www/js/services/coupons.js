@@ -88,7 +88,7 @@ angular.module('hawaiiqpon.coupon.service', [])
                             nearby.push(c);
                         }                         
                     });
-
+                    //console.log(nearby);
                     deferred.resolve(nearby);
                 })
                 .error(function(){

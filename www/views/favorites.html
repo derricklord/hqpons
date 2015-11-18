@@ -20,9 +20,20 @@
   <ion-content>
     <!-- Display message when no favorites exist -->
     <div class="vertical-center-container" >
-      <div class="vertical-center text-center">
+      <div ng-if="favorites.length <= 0" class="vertical-center text-center">
         <h1><i class="icon ion-heart-broken assertive"></i></h1>
         <p>Looks like you haven't added any favorites...</p>
+      </div>
+      <div ng-if="favorites.length > 0" class="vertical-center text-center">
+        <ion-list class="list"> 
+          <a class="item item-thumbnail-left" href="#/details/{{coupon._id}}"   ng-repeat="coupon in favorites  | orderBy:'distance'">
+          <img ng-if="coupon.hasImage" ng-src="http://hawaiiqpon.lordconsulting.net/uploads/{{coupon.img}}" style="height:auto; width:50%;">
+          <img ng-if="!coupon.hasImage" ng-src="img/logo.png" style="height:auto; width:50%;">
+          <h3>{{coupon.vendor}} </h3>
+          <p>{{coupon.title}}</p>
+          <p>Distance: {{coupon.distance}} mile(s)</p>
+          </a>          
+        </ion-list>
       </div>
     </div>
   </ion-content>

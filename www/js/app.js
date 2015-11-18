@@ -2,6 +2,7 @@ angular.module('hawaiiqpon', [
   'ionic',
   'ngCordova',
   'uiGmapgoogle-maps',
+  'LocalStorageModule',
   'hawaiiqpon.common.directives',
   'hawaiiqpon.common.filters',
   'hawaiiqpon.coupon.service',
@@ -16,9 +17,10 @@ angular.module('hawaiiqpon', [
     listView: true,
     radius: 25 ,
     filter: '',
-    location: {lat:'21.3136151', long: '-157.84803639999998'}
+    location: {lat:'21.3136151', long: '-157.84803639999998'},
+    favorites: []
 })
-.run(function($ionicPlatform, $rootScope, Settings, GeolocationService, $timeout, $ionicLoading) {
+.run(function($ionicPlatform, $rootScope, Settings, localStorageService, GeolocationService, $timeout, $ionicLoading) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -28,6 +30,16 @@ angular.module('hawaiiqpon', [
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
+    }
+    
+    var data = localStorageService.get('data');
+    if(data){
+      Settings.gps = data.gps;
+      Settings.listView = data.listView;
+      Settings.radius = data.radius;
+      Settings.filter = data.filter;
+      Settings.location = data.location;
+      Settings.favorites =  data.favorites;
     }
     
     $rootScope._ = _;
@@ -70,6 +82,7 @@ angular.module('hawaiiqpon', [
   .state('favorites', {
     url: "/favorites",
     templateUrl: "views/favorites.html",
+    controller: "favoritesCtrl"
   })
   
   .state('splash', {

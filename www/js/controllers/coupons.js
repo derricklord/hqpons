@@ -22,6 +22,7 @@ angular.module('hawaiiqpon.coupon.controller', [])
     $ionicLoading.show({
       template: '<ion-spinner></ion-spinner> <p>Finding Deals...</p>'
     });
+    /*
     var data = [];
     var premiumData = [];
     var tempCoupons = Coupons.refreshCoupons();
@@ -37,8 +38,8 @@ angular.module('hawaiiqpon.coupon.controller', [])
     $scope.premiumCoupons = premiumData;  
     $ionicLoading.hide();
     console.log($scope.coupons);
-    
-    //$scope.updateCoupons();
+    */
+    $scope.updateCoupons();
   }
   
 
@@ -84,7 +85,7 @@ angular.module('hawaiiqpon.coupon.controller', [])
      });
   }  
 })
-.controller('detailsCtrl', function($scope, $stateParams, Coupons) {
+.controller('detailsCtrl', function($scope, $stateParams, Coupons, Settings) {
     var Id = $stateParams.id;
     $scope.offer = Coupons.getCoupon(Id);
     $scope.windowOptions = {
@@ -99,26 +100,33 @@ angular.module('hawaiiqpon.coupon.controller', [])
         longitude: $scope.offer.loc.long
       },
       options: { draggable: false, icon: 'img/marker.png' }
-      /*
-      events: {
-        dragend: function (marker, eventName, args) {
-          $log.log('marker dragend');
-          var lat = marker.getPosition().lat();
-          var lon = marker.getPosition().lng();
-          $log.log(lat);
-          $log.log(lon);
-
-          $scope.marker.options = {
-            draggable: true,
-            labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
-            labelAnchor: "100 0",
-            labelClass: "marker-labels"
-          };
-        }
-      }
-      */
     };   
     
-});
+    $scope.addFavorite = function(offer){
+      if(offer){
+        Settings.favorites.push(offer);
+      }
+      console.log(Settings.favorites);
+    }
+})
 
+.controller('favoritesCtrl', function($scope, $stateParams, Coupons, Settings, localStorageService) {
+   $scope.favorites = Settings.favorites;
+   
+   $scope.settings = {
+    gps: Settings.gps,
+    listView: Settings.listView,
+    radius: Settings.radius,
+    location: Settings.location,
+    favorites: Settings.favorites
+  }
+
+  $scope.$watch('settings', function(){
+    Settings.gps = $scope.settings.gps;
+    Settings.listView = $scope.settings.listView;
+    Settings.radius = $scope.settings.radius;
+    Settings.favorites = $scope.favorites;
+    localStorageService.set('data', $scope.settings);
+  }, true);
+});
 
