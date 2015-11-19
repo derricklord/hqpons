@@ -1,8 +1,8 @@
 'use strict';
 angular.module('hawaiiqpon.coupon.service', [])
     .service('Coupons', function($http, $q, Settings) {
-        var HOST = 'http://hawaiiqpon.lordconsulting.net/api/coupons/all';
-        var IMG = 'http://hawaiiqpon.lordconsulting.net/uploads';
+        var HOST = 'https://hawaiiqpon.lordconsulting.net/api/coupons/all';
+        var IMG = 'https://hawaiiqpon.lordconsulting.net/uploads';
         var cpnData = [];
         
         return{
