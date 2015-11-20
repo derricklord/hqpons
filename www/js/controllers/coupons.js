@@ -1,5 +1,5 @@
 angular.module('hawaiiqpon.coupon.controller', [])
-.controller('couponCtrl', function($scope, $state, Coupons, CouponData, Settings, $timeout, $ionicLoading, $ionicHistory, $cordovaGeolocation, GeolocationService) {
+.controller('couponCtrl', function($scope, $state, Coupons, CouponData, Settings, $timeout, $ionicLoading, $ionicHistory, $cordovaGeolocation) {
  
  //Controller Properties
   $scope.coupons = [];
@@ -25,17 +25,17 @@ angular.module('hawaiiqpon.coupon.controller', [])
               lat,
               long
             }
-            //console.log($scope.mypos);
             init();
+            
           }, function(err) {
             // error
+            console.log(err);
           });
-
-    //$scope.updateCoupons();
   }); //end of view enter
 
 
   function init(){
+        
         Coupons.getCoupons().then(function(coupons){
           
           var listings = [];
@@ -73,11 +73,11 @@ angular.module('hawaiiqpon.coupon.controller', [])
                       
                       //location.launch = "window.open('" + location.vendor_url + "', '_system', 'location=yes'); return false;"
                       
-                      if(location.premium){
+                      if(location.premium && location.distance <= Settings.radius){
                         premiumListings.push(location);
                       }
                       
-                      if(!location.premium){
+                      if(!location.premium && location.distance <= Settings.radius){
                         listings.push(location);
                       }
                   });
@@ -87,23 +87,22 @@ angular.module('hawaiiqpon.coupon.controller', [])
           Settings.coupons = listings;
           $scope.premiumCoupons = premiumListings;
           Settings.premiumCoupons = premiumListings;
-        });        
+        });  
+         $ionicLoading.hide();   
+         $scope.$broadcast('scroll.refreshComplete');
     }
 
-  
-
-  //Refresh Coupons
-  $scope.refresh = init;
-  
   
   //Set offer
   
  $scope.openOffer = function(offer){
    var data = CouponData;
+   console.log("Open offer:");
+   console.log(data.offer);
    data.offer = offer;
    $state.go('details');
  }
-  /*
+
   $scope.refresh = function(){
     $scope.$broadcast('scroll.refreshComplete');
     $ionicLoading.show({
@@ -112,7 +111,7 @@ angular.module('hawaiiqpon.coupon.controller', [])
 
     //$scope.updateCoupons();
     init();
-  }*/
+  }
   
 
   function calcDistance(lat1, lon1, lat2, lon2, unit) {
