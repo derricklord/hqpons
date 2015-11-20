@@ -9,8 +9,8 @@
   </author>
   <content src="index.html"/>
   <access origin="*"/>
-  <allow-navigation href="*" />
-  <allow-intent href="*" />
+  <allow-navigation href="*"/>
+  <allow-intent href="*"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
@@ -69,10 +69,10 @@
     <splash src="resources/ios/splash/Default~iphone.png" width="320" height="480"/>
   </platform>
   <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
-  <plugin name="cordova-plugin-console" spec="^1.0.1" />
-  <plugin name="cordova-plugin-device" spec="^1.0.1" />
-  <plugin name="cordova-plugin-dialogs" spec="^1.1.1" />
-  <plugin name="cordova-plugin-whitelist" spec="^1.0.0" />
-  <plugin name="com.ionic.keyboard" spec="https://github.com/driftyco/ionic-plugins-keyboard.git" />
-  <plugin name="cordova-plugin-splashscreen" spec="^2.1.0" />
+  <plugin name="cordova-plugin-console" spec="^1.0.1"/>
+  <plugin name="cordova-plugin-device" spec="^1.0.1"/>
+  <plugin name="cordova-plugin-dialogs" spec="^1.1.1"/>
+  <plugin name="cordova-plugin-whitelist" spec="^1.0.0"/>
+  <plugin name="com.ionic.keyboard" spec="https://github.com/driftyco/ionic-plugins-keyboard.git"/>
+  <plugin name="cordova-plugin-splashscreen" spec="^2.1.0"/>
 </widget>

@@ -1,11 +1,13 @@
 angular.module('hawaiiqpon', [
   'ionic',
+  'ngIOS9UIWebViewPatch',
   'ngCordova',
   'uiGmapgoogle-maps',
   'ngMap',
   'LocalStorageModule',
   'hawaiiqpon.common.directives',
   'hawaiiqpon.common.filters',
+  'hawaiiqpon.common.factories',
   'hawaiiqpon.coupon.service',
   'hawaiiqpon.coupon.controller',
   'hawaiiqpon.sidemenu.controller',  
@@ -19,9 +21,12 @@ angular.module('hawaiiqpon', [
     radius: 25 ,
     filter: '',
     location: {lat:'21.3136151', long: '-157.84803639999998'},
-    favorites: []
+    favorites: [],
+    coupons: [],
+    premiums: [],
+    offer:{}
 })
-.run(function($ionicPlatform, $rootScope, Settings, localStorageService, GeolocationService, $timeout, $ionicLoading) {
+.run(function($ionicPlatform, $rootScope, Settings, localStorageService, $timeout, $ionicLoading) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -41,32 +46,12 @@ angular.module('hawaiiqpon', [
       Settings.filter = data.filter;
       Settings.location = data.location;
       Settings.favorites =  data.favorites;
+      Settings.coupons = data.coupons;
+      Settings.premiums = data.premiums;
+      Settings.offer = data.offer;
     }
     
-    $rootScope._ = _;
-    /*
-    var options = {
-      timeout: 60000,
-      maximumAge: 600000,
-      enableHighAccuracy: true
-    };
-
-    
-    GeolocationService.getCurrentPosition(options).then(
-            function (position) {
-              Settings.location = {
-                  lat: position.coords.latitude,
-                  long: position.coords.longitude
-                  };
-              Settings.gps = true;    
-
-            },
-            function() {
-                console.log('Failed to load position');
-                Settings.gps = false;
-            }
-      ); 
-      */        
+    $rootScope._ = _;    
   });
 })
 
@@ -163,5 +148,5 @@ angular.module('hawaiiqpon', [
    $urlRouterProvider.otherwise('/splash');
 
 })
-
 ;
+
