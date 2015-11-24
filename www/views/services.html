@@ -1,23 +1,23 @@
 <ion-view view-title="Services">
   <ion-content>
-    <ion-refresher pulling-text="Pull to refresh..." on-refresh="init()">
+    <ion-refresher pulling-text="Pull to refresh..." on-refresh="refresh()">
     </ion-refresher>    
-    <ion-list class="list"> 
-        <a class="item item-thumbnail-left" ng-click="openOffer(coupon)"   ng-repeat="coupon in premiumCoupons | filter: 'Service'  | orderBy:'distance'">
-        <img ng-if="coupon.hasImage" ng-src="http://hawaiiqpon.lordconsulting.net/uploads/{{coupon.img}}" style="height:auto; width:50%;">
-        <img ng-if="!coupon.hasImage" ng-src="img/logo.png" style="height:auto; width:50%;">
-        <h3>{{coupon.vendor}} <span class="advertisement">Ad</span></h3>
-        <p>{{coupon.title}}</p>
-        <p>Distance: {{coupon.distance}} mile(s)</p>
-        </a>  
+    <ion-list class="list" can-swipe="true"> 
+        <ion-item class="item-thumbnail-left" ng-click="openOffer(coupon)"  ng-repeat="coupon in premiumCoupons  | filter: 'Service' | orderBy:'distance'">
+            <img  ng-src="http://hawaiiqpon.lordconsulting.net/uploads/{{coupon.img}}" onerror="this.src = 'img/logo.png';" style="height:auto; width:50%;">
+            <h3>{{coupon.vendor}} </h3>
+            <p>{{coupon.title}}</p>
+            <p>Distance: {{coupon.distance}} mile(s)</p>
+            <ion-option-button class="button-balanced icon ion-android-favorite-outline"> Share</ion-option-button>             
+        </ion-item>    
                           
-        <a class="item item-thumbnail-left" ng-click="openOffer(coupon)" ng-repeat="coupon in coupons | filter: 'Service' | orderBy:'distance'">
-        <img ng-if="coupon.hasImage" ng-src="http://hawaiiqpon.lordconsulting.net/uploads/{{coupon.img}}" style="height:auto; width:50%;">
-        <img ng-if="!coupon.hasImage" ng-src="img/logo.png" style="height:auto; width:50%;">
-        <h3>{{coupon.vendor}} </h3>
-        <p>{{coupon.title}}</p>
-        <p>Distance: {{coupon.distance}} mile(s)</p>
-        </a>                  
+        <ion-item class="item-thumbnail-left" ng-click="openOffer(coupon)"  ng-repeat="coupon in coupons  | filter: 'Service' | orderBy:'distance'">
+            <img  ng-src="http://hawaiiqpon.lordconsulting.net/uploads/{{coupon.img}}" onerror="this.src = 'img/logo.png';" style="height:auto; width:50%;">
+            <h3>{{coupon.vendor}} </h3>
+            <p>{{coupon.title}}</p>
+            <p>Distance: {{coupon.distance}} mile(s)</p>
+            <ion-option-button class="button-balanced icon ion-android-favorite-outline"> Share</ion-option-button>            
+        </ion-item>                  
     </ion-list>     
   </ion-content>
 </ion-view>

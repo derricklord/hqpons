@@ -19,6 +19,18 @@
 
 .angular-google-map-container { height: 220px; }
 
+.modal {
+  display: block;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  overflow: hidden;
+  min-height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0, .4);
+  border-radius: 5px;
+}
+
 .advertisement{
 	background-color: #fec110;
 	color: #1c5f30;
@@ -222,7 +234,7 @@
 
 .title{
     font-size: 30px;
-    font-family: 'Lato';
-    font-style: italic;
+    /*font-family: 'Lato';*/
+    /*font-style: italic;*/
     color: white;
 }

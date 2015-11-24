@@ -1,5 +1,5 @@
 angular.module('hawaiiqpon.coupon.controller', [])
-.controller('couponCtrl', function($scope, $state, Coupons, CouponData, Settings, $timeout, $ionicLoading, $ionicHistory, $cordovaGeolocation) {
+.controller('couponCtrl', function($scope, $state, Coupons, CouponData, Settings, $ionicModal, $timeout, $ionicLoading, $ionicHistory, $cordovaGeolocation) {
  
  //Controller Properties
   $scope.coupons = [];
@@ -9,6 +9,20 @@ angular.module('hawaiiqpon.coupon.controller', [])
   $scope.gps = Settings.gps;
   $scope.listings = [];
   $scope.mypos = {};
+  $scope.couponpos = {};
+  
+    //Show Loading Message
+  $ionicLoading.show({
+    template: 'Finding Deals...'
+  });
+  
+    //Setup Offers Modal Window
+  $ionicModal.fromTemplateUrl('views/coupon-offer.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal; 
+  });  
      
   var posOptions = {timeout: 10000, enableHighAccuracy: false};
 
@@ -25,6 +39,28 @@ angular.module('hawaiiqpon.coupon.controller', [])
               lat,
               long
             }
+            
+            $scope.couponpos = {
+              lat,
+              long
+            }
+            
+            $scope.windowOptions = {
+                visible: true
+            };
+            
+            $scope.map = { center: { latitude: $scope.couponpos.lat , longitude: $scope.couponpos.long }, zoom: 15 };
+            
+          
+            $scope.marker = {
+              id: 0,
+              coords: {
+                latitude: $scope.couponpos.lat,
+                longitude: $scope.couponpos.long
+              },
+              options: { draggable: false, icon: 'img/marker.png' }
+            };            
+
             init();
             
           }, function(err) {
@@ -84,32 +120,28 @@ angular.module('hawaiiqpon.coupon.controller', [])
           });
           
           $scope.coupons = listings;
-          Settings.coupons = listings;
+          //Settings.coupons = listings;
           $scope.premiumCoupons = premiumListings;
-          Settings.premiumCoupons = premiumListings;
+          //Settings.premiumCoupons = premiumListings;
+          CouponData.setCoupons(listings, premiumListings);
+          
         });  
          $ionicLoading.hide();   
-         $scope.$broadcast('scroll.refreshComplete');
+         
     }
 
+  //Refresh coupons
+  $scope.refresh = function(){
+    init();
+    $scope.$broadcast('scroll.refreshComplete');
+  }
   
-  //Set offer
-  
- $scope.openOffer = function(offer){
-   var data = CouponData;
-   console.log("Open offer:");
-   console.log(data.offer);
-   data.offer = offer;
-   $state.go('details');
- }
 
   $scope.refresh = function(){
     $scope.$broadcast('scroll.refreshComplete');
     $ionicLoading.show({
       template: '<ion-spinner></ion-spinner> <p>Finding Deals...</p>'
     });
-
-    //$scope.updateCoupons();
     init();
   }
   
@@ -129,6 +161,51 @@ angular.module('hawaiiqpon.coupon.controller', [])
           if (unit=="N") { dist = dist * 0.8684 };
           return Math.round(dist*100)/100;
   } 
+
+   $scope.openOffer = function(coupon) {
+      $scope.offer = coupon;
+      $scope.map = { center: { latitude: coupon.loc.lat , longitude: coupon.loc.long }, zoom: 15 };
+    
+ 
+      $scope.marker = {
+        id: 0,
+        coords: {
+          latitude: coupon.loc.lat,
+          longitude: coupon.loc.long
+        },
+        options: { draggable: false, icon: 'img/marker.png' }
+      };       
+      
+      $scope.modal.show();
+    };
+    
+
+    $scope.openMapOffer = function(event, coupon) {
+      $scope.offer = coupon;
+      $scope.modal.show();
+    };   
+    
+    $scope.closeOffer = function() {
+      $scope.modal.hide();
+    };
+    
+    $scope.launch = function(url){
+        window.open(url, '_system', 'location=yes'); 
+        return false;
+    };
+    
+    //Cleanup the modal when we're done with it!
+    $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+    });
+    // Execute action on hide modal
+    $scope.$on('modal.hidden', function() {
+      // Execute action
+    });
+    // Execute action on remove modal
+    $scope.$on('modal.removed', function() {
+      // Execute action
+    });
 
   //Update Coupons
   /*
@@ -173,11 +250,10 @@ angular.module('hawaiiqpon.coupon.controller', [])
      });
   }*/  
 })
-.controller('detailsCtrl', function($scope, $stateParams, Coupons, CouponData, Settings) {
+.controller('detailsCtrl', function($scope, $stateParams, $state, Coupons, CouponData, Settings) {
     var Id = $stateParams.id;
-    var data = CouponData;
-    console.log(data.offer);
-    $scope.offer = data.offer;
+    $scope.offer = CouponData.getOffer();
+    console.log($scope.offer);
     
     $scope.windowOptions = {
         visible: true
@@ -194,13 +270,18 @@ angular.module('hawaiiqpon.coupon.controller', [])
       options: { draggable: false, icon: 'img/marker.png' }
     };   
 
+
+    $scope.closeOffer = function(){
+      CouponData.clearOffer();
+      $state.go('app.main');
+    }
     
-    
+    /*
     $scope.addFavorite = function(offer){
       if(offer){
         Settings.favorites.push(offer);
       }
-    }
+    }*/
 })
 
 .controller('favoritesCtrl', function($scope, $stateParams, Coupons, Settings, localStorageService) {
