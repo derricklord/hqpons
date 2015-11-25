@@ -1,7 +1,9 @@
 angular.module('hawaiiqpon.coupon.controller', [])
-.controller('couponCtrl', function($scope, $state, Coupons, CouponData, Settings, $ionicModal, $timeout, $ionicLoading, $ionicHistory, $cordovaGeolocation) {
+.controller('couponCtrl', function($scope, $state, Coupons, CouponData, Settings, $ionicModal, $timeout, $ionicListDelegate, $ionicLoading, $ionicHistory, $cordovaGeolocation) {
  
  //Controller Properties
+  var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  
   $scope.coupons = [];
   $scope.premiumCoupons = [];  
   
@@ -24,7 +26,7 @@ angular.module('hawaiiqpon.coupon.controller', [])
     $scope.modal = modal; 
   });  
      
-  var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  
 
 
   //Initialize Controller on View enter
@@ -120,11 +122,8 @@ angular.module('hawaiiqpon.coupon.controller', [])
           });
           
           $scope.coupons = listings;
-          //Settings.coupons = listings;
           $scope.premiumCoupons = premiumListings;
-          //Settings.premiumCoupons = premiumListings;
-          CouponData.setCoupons(listings, premiumListings);
-          
+
         });  
          $ionicLoading.hide();   
          
@@ -145,6 +144,17 @@ angular.module('hawaiiqpon.coupon.controller', [])
     init();
   }
   
+  $scope.addFavorite = function(offer){
+    if(offer){
+      if(Settings.favorites.indexOf(offer) === -1){
+        Settings.favorites.push(offer);
+        $ionicListDelegate.closeOptionButtons();       
+      }else{
+        console.log("Already present");
+        $ionicListDelegate.closeOptionButtons();
+      }
+    }
+  }
 
   function calcDistance(lat1, lon1, lat2, lon2, unit) {
           var radlat1 = Math.PI * lat1/180;
@@ -179,11 +189,6 @@ angular.module('hawaiiqpon.coupon.controller', [])
       $scope.modal.show();
     };
     
-
-    $scope.openMapOffer = function(event, coupon) {
-      $scope.offer = coupon;
-      $scope.modal.show();
-    };   
     
     $scope.closeOffer = function() {
       $scope.modal.hide();
@@ -284,8 +289,13 @@ angular.module('hawaiiqpon.coupon.controller', [])
     }*/
 })
 
-.controller('favoritesCtrl', function($scope, $stateParams, Coupons, Settings, localStorageService) {
+.controller('favoritesCtrl', function($scope, $stateParams, Coupons, Settings, localStorageService, $ionicModal, $ionicListDelegate) {
    $scope.favorites = Settings.favorites;
+   
+   $scope.removeFavorite = function(index){
+     $scope.favorites.splice(index, 1);
+     $ionicListDelegate.closeOptionButtons();
+   }
    
    $scope.settings = {
     gps: Settings.gps,
@@ -308,5 +318,35 @@ angular.module('hawaiiqpon.coupon.controller', [])
     Settings.offer = $scope.settings.offer;
     localStorageService.set('data', $scope.settings);
   }, true);
+  
+  //Setup Offers Modal Window
+  $ionicModal.fromTemplateUrl('views/coupon-offer.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal; 
+  }); 
+  
+  $scope.openOffer = function(coupon) {
+      $scope.offer = coupon;
+      $scope.map = { center: { latitude: coupon.loc.lat , longitude: coupon.loc.long }, zoom: 15 };
+    
+ 
+      $scope.marker = {
+        id: 0,
+        coords: {
+          latitude: coupon.loc.lat,
+          longitude: coupon.loc.long
+        },
+        options: { draggable: false, icon: 'img/marker.png' }
+      };       
+      
+      $scope.modal.show();
+    };
+    
+    
+    $scope.closeOffer = function() {
+      $scope.modal.hide();
+    };
 });
 

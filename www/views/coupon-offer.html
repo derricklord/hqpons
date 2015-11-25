@@ -1,8 +1,19 @@
   <ion-modal-view>
   <!--<div class="post-card">-->
   <div class="list card">
-   
-    <div class="item item-image" style="height: 240px; background-color:#fec110;">
+    <div class="item item-image" style="height: 200px;">
+      <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+        <ui-gmap-marker coords="marker.coords" options="marker.options"  idkey="marker.id">
+        </ui-gmap-marker>
+      </ui-gmap-google-map>
+    </div>  
+  
+    <div class="item item-body" style="background-color: #256a31; color: white; height: 100px; padding: 10px;">
+      <h2 style="text-align: center; color: white;">{{offer.desc}}</h2>
+      <!--<h3 style="text-align: center; color: white;">exp. {{offer.expiration| date:'shortDate'}}</h3>-->
+    </div>
+      
+    <div class="item item-image" style="height: 240px;">
       <h1 style="text-align:right; margin-right:10px; font-size:24px;" ng-click="closeOffer()"> <i class="ion-close-round" ></i></h1>
       <img style="width:30%; margin: 0 auto; text-align: center; margin-top:5px; margin-bottom:5px;" ng-src="http://hawaiiqpon.lordconsulting.net/uploads/{{offer.img}}"  onerror="this.src = 'img/logo.png';">
       <p class="card-description" >
@@ -12,20 +23,6 @@
           <h4 style="text-align: center;"><a href="tel:{{offer.vendor_phone}}" target="_blank"> {{offer.vendor_phone | tel}}</a></h4>  
       </p>
     </div>    
-    
-    <div class="item item-body" style="background-color: #256a31; color: white; height: 100px; padding: 10px;">
-      <h2 style="text-align: center; color: white;">{{offer.desc}}</h2>
-      <!--<h3 style="text-align: center; color: white;">exp. {{offer.expiration| date:'shortDate'}}</h3>-->
-    </div>
-    
-    <div class="item item-image" style="height: 200px;">
-      <ui-gmap-google-map center='map.center' zoom='map.zoom'>
-        <ui-gmap-marker coords="marker.coords" options="marker.options"  idkey="marker.id">
-        </ui-gmap-marker>
-      </ui-gmap-google-map>
-    </div>    
-    
-
     
 
     <div class="item">     

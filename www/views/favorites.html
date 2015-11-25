@@ -8,12 +8,9 @@
         </button>
       </ion-nav-buttons>
    
-      <ion-nav-buttons side="right">
-          <button class="button button-icon icon ion-map" ng-click="showMap()"></button>
-      </ion-nav-buttons>
       
       <ion-nav-buttons side="right">
-          <button class="button button-icon icon ion-android-favorite-outline" ui-sref="favorites"></button>
+          <button class="button button-icon icon ion-android-favorite-outline" ui-sref="favorites">{{favorites.length}}</button>
       </ion-nav-buttons>
 
   </ion-nav-bar>
@@ -25,14 +22,14 @@
         <p>Looks like you haven't added any favorites...</p>
       </div>
       <div ng-if="favorites.length > 0" class="vertical-center text-center">
-        <ion-list class="list"> 
-          <a class="item item-thumbnail-left" href="#/details/{{coupon._id}}"   ng-repeat="coupon in favorites  | orderBy:'distance'">
-          <img ng-if="coupon.hasImage" ng-src="http://hawaiiqpon.lordconsulting.net/uploads/{{coupon.img}}" style="height:auto; width:50%;">
-          <img ng-if="!coupon.hasImage" ng-src="img/logo.png" style="height:auto; width:50%;">
-          <h3>{{coupon.vendor}} </h3>
-          <p>{{coupon.title}}</p>
-          <p>Distance: {{coupon.distance}} mile(s)</p>
-          </a>          
+        <ion-list class="list" can-swipe="true"> 
+          <ion-item class="item-thumbnail-left" ng-click="openOffer(coupon)"   ng-repeat="coupon in favorites  | orderBy:'distance' track by $index">
+            <img  ng-src="http://hawaiiqpon.lordconsulting.net/uploads/{{coupon.img}}" onerror="this.src = 'img/logo.png';" style="height:auto; width:50%;">
+            <h3>{{coupon.vendor}} </h3>
+            <p>{{coupon.title}}</p>
+            <p>Distance: {{coupon.distance}} mile(s)</p>
+            <ion-option-button class="button-assertive icon ion-android-favorite-outline" ng-click="removeFavorite($index)"> Remove</ion-option-button> 
+          </ion-item>          
         </ion-list>
       </div>
     </div>

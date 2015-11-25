@@ -1,4 +1,4 @@
-<ion-view view-title="Services">
+<ion-view view-title="Services" ng-cloak>
   <ion-content>
     <ion-refresher pulling-text="Pull to refresh..." on-refresh="refresh()">
     </ion-refresher>    
@@ -8,7 +8,7 @@
             <h3>{{coupon.vendor}} </h3>
             <p>{{coupon.title}}</p>
             <p>Distance: {{coupon.distance}} mile(s)</p>
-            <ion-option-button class="button-balanced icon ion-android-favorite-outline"> Share</ion-option-button>             
+            <ion-option-button class="button-balanced icon ion-android-favorite-outline" ng-click="addFavorite(coupon)"> Save</ion-option-button>             
         </ion-item>    
                           
         <ion-item class="item-thumbnail-left" ng-click="openOffer(coupon)"  ng-repeat="coupon in coupons  | filter: 'Service' | orderBy:'distance'">
@@ -16,8 +16,11 @@
             <h3>{{coupon.vendor}} </h3>
             <p>{{coupon.title}}</p>
             <p>Distance: {{coupon.distance}} mile(s)</p>
-            <ion-option-button class="button-balanced icon ion-android-favorite-outline"> Share</ion-option-button>            
+            <ion-option-button class="button-balanced icon ion-android-favorite-outline" ng-click="addFavorite(coupon)"> Save</ion-option-button>            
         </ion-item>                  
     </ion-list>     
   </ion-content>
+  <ion-footer-bar class="bar-balanced" align-title="left">
+    <h1 class="title">Coupons <span class="badge badge-energized">{{(coupons|filter:'Service').length + (premiumCoupons|filter:'Service').length}}</span></h1>
+</ion-footer-bar>  
 </ion-view>
