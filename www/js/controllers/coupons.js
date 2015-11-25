@@ -3,7 +3,7 @@ angular.module('hawaiiqpon.coupon.controller', [])
  
  //Controller Properties
   var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  
+  $scope.allCoupons = [];
   $scope.coupons = [];
   $scope.premiumCoupons = [];  
   
@@ -32,19 +32,35 @@ angular.module('hawaiiqpon.coupon.controller', [])
   //Initialize Controller on View enter
   $scope.$on('$ionicView.enter', function() {
     $ionicHistory.clearHistory();
-    $cordovaGeolocation
+    if(!Settings.location){
+      $scope.refresh();
+    }else{
+      setLocation();
+    }
+
+  }); //end of view enter
+
+
+  function setLocation(){
+        $cordovaGeolocation
           .getCurrentPosition(posOptions)
           .then(function (position) {
             var lat  = position.coords.latitude
             var long = position.coords.longitude
+       
+            Settings.location = {
+              lat: lat,
+              long: long
+            }  
+            
             $scope.mypos = {
-              lat,
-              long
+              lat: lat,
+              long: long
             }
             
             $scope.couponpos = {
-              lat,
-              long
+              lat: lat,
+              long: long
             }
             
             $scope.windowOptions = {
@@ -69,73 +85,92 @@ angular.module('hawaiiqpon.coupon.controller', [])
             // error
             console.log(err);
           });
-  }); //end of view enter
-
+  }
 
   function init(){
         
-        Coupons.getCoupons().then(function(coupons){
-          
-          var listings = [];
-          var premiumListings = [];
-          
-          coupons.forEach(function(coupon){
-                  coupon.locations.forEach(function(location){
-                      var locDistance = calcDistance($scope.mypos.lat, $scope.mypos.long, location.loc.lat, location.loc.long, 'N');
-                      location.distance = locDistance;
-                      
-                      location.desc = coupon.desc;
-                      location.desc2 = coupon.desc2;
-                      location.expiration = coupon.expiration;
-                      location.owner = coupon.owner;
-                      location.premium = coupon.premium;
-                      location.title = coupon.title;
-                      location.vendor = coupon.vendor;
-                      location.vendor_url = coupon.vendor_url;
-                      location.vendor_phone = coupon.vendor_phone;
-                      location.promo_code = coupon.promo_code;
-                      
-                      if(coupon.img){
-                          location.hasImage = true;
-                          location.img = coupon.img;
-                      }else{
-                          location.hasImage = false;
-                          location.img = 'img/twlogo.png'
-                      }
-                      
-                      if(coupon.category){
-                          location.category = coupon.category;
-                      }else{
-                          location.category = 'General';
-                      }                          
-                      
-                      //location.launch = "window.open('" + location.vendor_url + "', '_system', 'location=yes'); return false;"
-                      
-                      if(location.premium && location.distance <= Settings.radius){
-                        premiumListings.push(location);
-                      }
-                      
-                      if(!location.premium && location.distance <= Settings.radius){
-                        listings.push(location);
-                      }
-                  });
-          });
-          
-          $scope.coupons = listings;
-          $scope.premiumCoupons = premiumListings;
-
-        });  
-         $ionicLoading.hide();   
-         
+          Coupons.getCoupons().then(function(coupons){
+            
+            var listings = [];
+            var premiumListings = [];
+            var all = [];
+            
+            coupons.forEach(function(coupon){
+                    coupon.locations.forEach(function(location){
+                        var locDistance = calcDistance($scope.mypos.lat, $scope.mypos.long, location.loc.lat, location.loc.long, 'N');
+                        location.distance = locDistance;
+                        
+                        location.desc = coupon.desc;
+                        location.desc2 = coupon.desc2;
+                        location.expiration = coupon.expiration;
+                        location.owner = coupon.owner;
+                        location.premium = coupon.premium;
+                        location.title = coupon.title;
+                        location.vendor = coupon.vendor;
+                        location.vendor_url = coupon.vendor_url;
+                        location.vendor_phone = coupon.vendor_phone;
+                        location.promo_code = coupon.promo_code;
+                        
+                        if(coupon.img){
+                            location.hasImage = true;
+                            location.img = coupon.img;
+                        }else{
+                            location.hasImage = false;
+                            location.img = 'logo.png';
+                        }
+                        
+                        if(coupon.category){
+                            location.category = coupon.category;
+                        }else{
+                            location.category = 'General';
+                        }                          
+                        
+                        //location.launch = "window.open('" + location.vendor_url + "', '_system', 'location=yes'); return false;"
+                        
+                        if(location.premium && location.distance <= Settings.radius){
+                          premiumListings.push(location);
+                        }
+                        
+                        if(!location.premium && location.distance <= Settings.radius){
+                          listings.push(location);
+                        }
+                        
+                        all.push(location);
+                    });
+            });
+            
+            $scope.coupons = listings;
+            $scope.premiumCoupons = premiumListings;
+            $scope.allCoupons = all;
+            Settings.coupons = all;
+          });  
+          $ionicLoading.hide();
     }
 
   //Refresh coupons
   $scope.refresh = function(){
-    init();
+    //init();
+    $scope.coupons = [];
+    $scope.premiumCoupons = [];
+    
+    if($scope.allCoupons){
+      $scope.allCoupons.forEach(function(location){
+        if(location.premium && location.distance <= Settings.radius){
+          $scope.premiumCoupons.push(location);
+        }
+        
+        if(!location.premium && location.distance <= Settings.radius){
+          $scope.coupons.push(location);
+        }         
+      });
+    }else{
+      init();
+    }
+    
     $scope.$broadcast('scroll.refreshComplete');
   }
   
-
+/*
   $scope.refresh = function(){
     $scope.$broadcast('scroll.refreshComplete');
     $ionicLoading.show({
@@ -143,7 +178,7 @@ angular.module('hawaiiqpon.coupon.controller', [])
     });
     init();
   }
-  
+ */ 
   $scope.addFavorite = function(offer){
     if(offer){
       if(Settings.favorites.indexOf(offer) === -1){
@@ -185,7 +220,7 @@ angular.module('hawaiiqpon.coupon.controller', [])
         },
         options: { draggable: false, icon: 'img/marker.png' }
       };       
-      
+
       $scope.modal.show();
     };
     
@@ -280,13 +315,7 @@ angular.module('hawaiiqpon.coupon.controller', [])
       CouponData.clearOffer();
       $state.go('app.main');
     }
-    
-    /*
-    $scope.addFavorite = function(offer){
-      if(offer){
-        Settings.favorites.push(offer);
-      }
-    }*/
+
 })
 
 .controller('favoritesCtrl', function($scope, $stateParams, Coupons, Settings, localStorageService, $ionicModal, $ionicListDelegate) {
