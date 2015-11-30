@@ -1,29 +1,27 @@
 <ion-side-menus enable-menu-with-back-views="false">
+  
   <ion-side-menu-content>
     <ion-nav-bar class="bar-balanced">
       <ion-nav-back-button>
       </ion-nav-back-button>
+      
       <ion-nav-buttons side="left">
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
       </ion-nav-buttons>
-   
-      
       <ion-nav-buttons side="right">
-          
           <button class="button button-icon icon ion-android-favorite-outline" menu-close ui-sref="favorites">{{settings.favorites.length}}</button>
-      </ion-nav-buttons>
-
+      </ion-nav-button>
     </ion-nav-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
-
+  
   <ion-side-menu side="left">
     <ion-content has-bouncing="false" scroll="false" class="menu-outer">
       <div class="row menu-top-options">
         <div class="col col-top">
           <ion-list>
-            
+            <!-- Sidemen Header -->
             <ion-item class="heading-item" menu-close>
               <div class="row">
                 <div class="col">
@@ -42,18 +40,20 @@
               </div>
             </ion-item>
             
+            <!-- Radius Slider -->
             <ion-item>
               Search Radius: {{settings.radius}}
             </ion-item>
             <ion-item class="range range-energized">
               1
-              <input type="range" name="volume" min="0" max="100" value="25" ng-model="settings.radius">
+              <input type="range" name="volume" min="1" max="100" value="25" ng-model="settings.radius">
               100
             </ion-item>
-            
           </ion-list>
         </div>
       </div>
     </ion-content>
   </ion-side-menu>
+  
+  
 </ion-side-menus>

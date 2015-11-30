@@ -1,28 +1,23 @@
 'use strict';
 angular.module('hawaiiqpon.coupon.service', [])
-    .service('Coupons', function($http, $q, Settings) {
-        var HOST = 'https://hawaiiqpon.lordconsulting.net/api/coupons/all';
+    .service('Coupons', function($http, $q, Settings, GeolocationService, localStorageService, apiURL) {
+       // var HOST = 'https://hawaiiqpon.lordconsulting.net/api/coupons/all';
         var IMG = 'https://hawaiiqpon.lordconsulting.net/uploads';
-        var cpnData = [];
+        var cpnData = { currentCoupons: [] };
+    
+        this.getModel = function () {
+            return cpnData.currentCoupons;
+        };
         
-        return{
-            getCoupons: getCoupons,
-            getCoupon: getCoupon,
-            refreshCoupons: refreshCoupons
-        }
-        
-        function getCoupons(){
-          var url;
+        this.getCoupons = function(){
           var deferred = $q.defer();
-          
 
-          url = 'https://hawaiiqpon.lordconsulting.net/api/coupons/all';
-          
-          $http.get(url)
-            .success(function(data){
-              var coupons = data.coupons;
+          $http.get(apiURL)
+            .success(function(data){ 
+              var coupons = cleanData(data);
               deferred.resolve(coupons);
-              cpnData = coupons;
+              cpnData.currentCoupons = coupons;
+              Settings.coupons = coupons;
             })
             .error(function(data, status){
               console.log(data);
@@ -33,21 +28,54 @@ angular.module('hawaiiqpon.coupon.service', [])
         }
 
 
-        function getCoupon(Id){
-            for(var i=0; i<cpnData.length; i++){
-                if(cpnData[i]._id == Id){
-                    return cpnData[ i ];
-                }
-            }            
+        this.getCoupon = function(Id){
+           
         }
 
-        function refreshCoupons(){
-            if(cpnData.length > 0){
-                return cpnData;
+        this.refreshCoupons = function(){
+            if(cpnData.currentCoupons.length > 0){
+                return cpnData.currentCoupons;
             }
         }
         
-        function calcDistance(lat1, lon1, lat2, lon2, unit) {
+        this.cleanData = function(data){
+            var coupons = data;
+            var flatData = [];
+            coupons.forEach(function(coupon){
+                coupon.locations.forEach(function(location){
+                    location.distance = 0;
+                    location.desc = coupon.desc;
+                    location.desc2 = coupon.desc2;
+                    location.expiration = coupon.expiration;
+                    location.owner = coupon.owner;
+                    location.premium = coupon.premium;
+                    location.title = coupon.title;
+                    location.vendor = coupon.vendor;
+                    location.vendor_url = coupon.vendor_url;
+                    location.vendor_phone = coupon.vendor_phone;
+                    location.promo_code = coupon.promo_code;
+                    
+                    if(coupon.img){
+                        location.hasImage = true;
+                        location.img = coupon.img;
+                    }else{
+                        location.hasImage = false;
+                        location.img = 'logo.png';
+                    }
+                    
+                    if(coupon.category){
+                        location.category = coupon.category;
+                    }else{
+                        location.category = 'General';
+                    }
+                                        
+                    flatData.push(location);
+                });         
+            });
+            return flatData;  
+        }
+        
+        this.calcDistance = function(lat1, lon1, lat2, lon2, unit) {
                 var radlat1 = Math.PI * lat1/180;
                 var radlat2 = Math.PI * lat2/180;
                 var radlon1 = Math.PI * lon1/180;
@@ -61,6 +89,50 @@ angular.module('hawaiiqpon.coupon.service', [])
                 if (unit=="K") { dist = dist * 1.609344 };
                 if (unit=="N") { dist = dist * 0.8684 };
                 return Math.round(dist*100)/100;
-        }         
-    }) 
-    ;
+        }  
+        
+         var cleanData = function(data){
+                    var coupons = data.coupons;
+                    //console.log(data.coupons);
+                    var flatData = [];
+                    
+                    coupons.forEach(function(coupon){
+                        coupon.locations.forEach(function(location){
+                            location.distance = 0;
+                            location.desc = coupon.desc;
+                            location.desc2 = coupon.desc2;
+                            location.expiration = coupon.expiration;
+                            location.owner = coupon.owner;
+                            location.premium = coupon.premium;
+                            location.title = coupon.title;
+                            location.vendor = coupon.vendor;
+                            location.vendor_url = coupon.vendor_url;
+                            location.vendor_phone = coupon.vendor_phone;
+                            location.promo_code = coupon.promo_code;
+                            
+                            if(coupon.img){
+                                location.hasImage = true;
+                                location.img = coupon.img;
+                            }else{
+                                location.hasImage = false;
+                                location.img = 'logo.png';
+                            }
+                            
+                            if(coupon.category){
+                                location.category = coupon.category;
+                            }else{
+                                location.category = 'General';
+                            }
+                                                
+                            flatData.push(location);
+                            //console.log(location);
+                        });       
+                    }); 
+                    //console.log(flatData);  
+                    return flatData;
+                    
+         }
+        
+        
+        return this;       
+    });

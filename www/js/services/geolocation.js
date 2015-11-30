@@ -1,7 +1,7 @@
 'use strict';
 angular.module('hawaiiqpon.geolocation', [])
 
-.service('GeolocationService', function($q, $log, $ionicPlatform, $http, $cordovaGeolocation) {
+.service('GeolocationService', function($q, $log, $ionicPlatform, $http, $cordovaGeolocation, Settings) {
   var fallbackPositionObject = {
     latitude: '33.987873',
     longitude: '-118.470719',
@@ -21,17 +21,17 @@ angular.module('hawaiiqpon.geolocation', [])
                 .getCurrentPosition(options)
                 .then(
                     function (position) {
-                        //$log.debug('Got geolocation');
+                        //$log.debug('Got geolocation');                       
                         defer.resolve(position);
                     },
                     function (locationError) {
 
                         //$log.debug('Did not get geolocation');
-
                         defer.reject({
                             code: locationError.code,
                             message: locationError.message,
-                            coords: fallbackPositionObject
+                            coords: fallbackPositionObject,
+                            error: true
                         });
                     }
                 );
