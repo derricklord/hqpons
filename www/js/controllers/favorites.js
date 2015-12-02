@@ -5,6 +5,7 @@ angular.module('hawaiiqpon.favorites.controller', [])
    $scope.removeFavorite = function(index){
      $scope.favorites.splice(index, 1);
      $ionicListDelegate.closeOptionButtons();
+     $scope.modal.hide();
    }
    
    $scope.settings = {
@@ -27,7 +28,7 @@ angular.module('hawaiiqpon.favorites.controller', [])
   }, true);
   
   //Setup Offers Modal Window
-  $ionicModal.fromTemplateUrl('views/coupon-offer.html', {
+  $ionicModal.fromTemplateUrl('views/coupon-offer-favorite.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {

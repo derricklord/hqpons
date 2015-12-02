@@ -1,9 +1,9 @@
   <ion-modal-view>
   <div class="list card" style="border-radius:6px; padding: 5px;">
-    <div class="item item-image" style="height: 220px;">
+    <div class="item item-image" style="height: 200px;">
       <ui-gmap-google-map center='map.center' zoom='map.zoom'>
         <ui-gmap-marker coords="marker.coords" options="marker.options"  idkey="marker.id">
-        </ui-gmap-marker>    
+        </ui-gmap-marker>      
       </ui-gmap-google-map>
     </div>  
   
@@ -22,17 +22,23 @@
       
     <div class="item item-image">
       <img style="width:30%; margin: 0 auto; text-align: center; margin-top:5px; margin-bottom:5px;" ng-src="http://hawaiiqpon.lordconsulting.net/uploads/{{offer.img}}"  onerror="this.src = 'img/logo.png';">
-      <h4 ng-if="!offer.hasImage" class="vertical-center text-center offer-text">{{offer.vendor}}</h4>
-      <h4 class="vertical-center text-center offer-text">{{offer.address}}</h4>
+      <h4 class="vertical-center text-center">{{offer.vendor}}</h4>
+      <h4 class="vertical-center text-center">{{offer.address}}</h4>
         <div class="button-bar">
-          <a class="button button-calm" href="tel:{{offer.vendor_phone}}" target="_blank"><i class="icon ion-ios-telephone offer-icon"></i></a>
-          <a class="button button-calm" href="#" ng-click="launch(offer.vendor_url)"><i class="icon ion-earth offer-icon"></i></a>
-          <a class="button button-calm" href="#" ng-click="addFavorite(offer)"><i class="icon ion-android-favorite-outline offer-icon"></i></a>
+          <a class="button button-calm" href="tel:{{offer.vendor_phone}}" target="_blank"><i class="icon ion-ios-telephone"></i></a>
+          <a class="button button-calm" href="#" ng-click="launch(offer.vendor_url)"><i class="icon ion-earth"></i></a>
+           <a class="button button-assertive" href="#" ng-click="removeFavorite(offer)"><i class="icon ion-android-favorite-outline"></i></a>
         </div>        
         <button class="button button-full button-balanced" ng-click="closeOffer()">
           Close
         </button>         
     </div>    
+    
+    <!--
+    <div class="item">     
+        <h4 style="text-align: center;">CODE: {{offer.promo_code}}</h4>
+    </div>
+    --> 
   </div>
 </ion-modal-view>
   

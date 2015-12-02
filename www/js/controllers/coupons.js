@@ -1,11 +1,12 @@
 angular.module('hawaiiqpon.coupon.controller', [])
-.controller('mainCtrl', function($scope, $state, $timeout, Coupons, GeolocationService, Settings,  $ionicModal,  $ionicListDelegate, $ionicLoading){
+.controller('mainCtrl', function($scope, $state, $timeout, Coupons, GeolocationService, Settings, uiGmapGoogleMapApi, $ionicModal, $ionicSlideBoxDelegate, $ionicListDelegate, $ionicLoading){
   $scope.allCoupons = [];
   $scope.coupons = [];
   $scope.premiumCoupons = []; 
   $scope.addFavorite = addFavorite;
   $scope.refresh = refresh;
 
+  
   //Setup Offers Modal Window
   $ionicModal.fromTemplateUrl('views/coupon-offer.html', {
     scope: $scope,
@@ -15,8 +16,23 @@ angular.module('hawaiiqpon.coupon.controller', [])
   });  
   
   $scope.openOffer = function(coupon) {
-    $scope.offer = coupon;    
-    $scope.modal.show();
+
+    $scope.offer = coupon;
+    $scope.map = { center: { latitude: coupon.loc.lat , longitude: coupon.loc.long }, zoom: 15 };
+    $scope.marker = {
+      id: 0,
+      coords: {
+        latitude: coupon.loc.lat,
+        longitude: coupon.loc.long
+      },
+      options: { draggable: false}
+    };   
+    uiGmapGoogleMapApi.then(function(maps) {
+      $scope.modal.show();
+      $timeout( function() {
+        $ionicSlideBoxDelegate.update();
+      }); 
+    });
   };
   
   
@@ -46,14 +62,28 @@ angular.module('hawaiiqpon.coupon.controller', [])
   //Get Location and Retrieve Coupons
   function load(){
     GeolocationService.getCurrentPosition().then(
-      function(position) {
+      function(position) {     
+        $scope.map = { center: { latitude: position.coords.latitude , longitude: position.coords.longitude }, zoom: 15 };
+        $scope.marker = {
+          id: 0,
+          coords: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          },
+          options: { draggable: false }
+        };
+        
         Coupons.getCoupons().then(function(coupons){
             var cpns = [];
-            var premiums = [];
+            
             coupons.forEach(function(coupon){
                 var distance = GeolocationService.calcDistance( position.coords.latitude,position.coords.longitude, coupon.loc.lat, coupon.loc.long, 'N');
                 coupon.distance = distance;
+                if(coupon.distance <= Settings.radius){
+                  cpns.push(coupon);
+                }
                 
+                /*
                 if(coupon.distance <= Settings.radius && !coupon.premium){
                   cpns.push(coupon);
                 }
@@ -61,6 +91,7 @@ angular.module('hawaiiqpon.coupon.controller', [])
                 if(coupon.distance <= Settings.radius && coupon.premium){
                   premiums.push(coupon);
                 }
+                */
             });
   
             Settings.coupons = coupons;
@@ -71,9 +102,16 @@ angular.module('hawaiiqpon.coupon.controller', [])
             
             $scope.allCoupons = coupons;
             $scope.coupons = cpns;
-            $scope.premiumCoupons = premiums;       
+            //$scope.premiumCoupons = cpns; 
+            //console.log($scope.allCoupons);
+                  
         });
         $ionicLoading.hide();
+    },function(error){
+       console.log(error);
+      $ionicLoading.show({
+        template: 'Unable to retrieve Data: ' + error.message
+      });
     });    
   }
 
@@ -85,17 +123,11 @@ angular.module('hawaiiqpon.coupon.controller', [])
       });
   
       $scope.coupons = [];
-      $scope.premiumCoupons = [];
-
 
       $scope.allCoupons.forEach(function(location){
-        if(location.premium && location.distance <= Settings.radius){
-          $scope.premiumCoupons.push(location);
-        }
-        
-        if(!location.premium && location.distance <= Settings.radius){
+        if(location.distance <= Settings.radius){
           $scope.coupons.push(location);
-        }         
+        }       
       });
 
       $ionicLoading.hide();
@@ -106,12 +138,20 @@ angular.module('hawaiiqpon.coupon.controller', [])
     function addFavorite(offer){
       if(offer){
         if(Settings.favorites.indexOf(offer) === -1){
-          Settings.favorites.push(offer);
-          $ionicListDelegate.closeOptionButtons();       
+          Settings.favorites.push(offer);  
+           $ionicLoading.show({
+            template: 'Favorite added...',
+            duration: 1000
+          });          
         }else{
-          console.log("Already present");
-          $ionicListDelegate.closeOptionButtons();
+          //console.log("Already present");
+          $ionicLoading.show({
+            template: 'Already in favorites...',
+            duration: 1000
+          });         
         }
+        $ionicListDelegate.closeOptionButtons();
+        $scope.modal.hide();
       }
     }   
           

@@ -46,9 +46,13 @@ angular.module('hawaiiqpon', [
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        //    key: 'your api key',
+        v: '3.20', //defaults to latest 3.X anyhow
+        libraries: 'weather,geometry,visualization'
+    });  
   $stateProvider
-
   .state('app', {
     url: "/app",
     abstract: true,
@@ -133,8 +137,8 @@ angular.module('hawaiiqpon', [
   });
 
   // if none of the above states are matched, use this as the fallback
-  //$urlRouterProvider.otherwise('/app/main/all');
-   $urlRouterProvider.otherwise('/splash');
+  $urlRouterProvider.otherwise('/app/main/all');
+   //$urlRouterProvider.otherwise('/splash');
 
 })
 ;

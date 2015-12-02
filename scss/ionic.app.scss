@@ -17,7 +17,30 @@
 @import "scss/common/common.styles";
 @import "scss/side-menu/side-menu.styles";
 
+.offer-text{
+    color: #1c5f30; 
+    font-weight: 300; 
+    font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    line-height: 1.2;
+}
+
+.offer-icon{
+  color: #1c5f30; 
+}
+
 .angular-google-map-container { height: 220px; }
+
+.slider {
+    height: 100%;
+}
+.slider-pager .slider-pager-page {
+    display: inline-block;
+    margin: 0px 3px;
+    width: 15px;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.3;
+}
 
 .modal {
   display: block;

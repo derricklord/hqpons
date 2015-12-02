@@ -2,25 +2,17 @@
   <ion-content>
     <ion-refresher pulling-text="Pull to refresh..." on-refresh="refresh()">
     </ion-refresher>    
-    <ion-list class="list" can-swipe="true"> 
-        <ion-item class="item-thumbnail-left" ng-click="openOffer(coupon)"  ng-repeat="coupon in premiumCoupons  | filter: 'Service' | orderBy:'distance'">
+    <ion-list class="list" can-swipe="true">                 
+        <ion-item class="item-thumbnail-left" ng-click="openOffer(coupon)"  ng-repeat="coupon in coupons | filter: 'Service'   | orderBy:['-premium', 'distance']">
             <img  ng-src="http://hawaiiqpon.lordconsulting.net/uploads/{{coupon.img}}" onerror="this.src = 'img/logo.png';" style="height:auto; width:50%;">
-            <h3>{{coupon.vendor}} <span class="advertisement">Ad</span></h3>
-            <p>{{coupon.title}}</p>
-            <p>Distance: {{coupon.distance}} mile(s)</p>
-            <ion-option-button class="button-balanced icon ion-android-favorite-outline" ng-click="addFavorite(coupon)"> Save</ion-option-button>             
-        </ion-item>    
-                          
-        <ion-item class="item-thumbnail-left" ng-click="openOffer(coupon)"  ng-repeat="coupon in coupons  | filter: 'Service' | orderBy:'distance'">
-            <img  ng-src="http://hawaiiqpon.lordconsulting.net/uploads/{{coupon.img}}" onerror="this.src = 'img/logo.png';" style="height:auto; width:50%;">
-            <h3>{{coupon.vendor}} </h3>
+            <h3>{{coupon.vendor}}  <span ng-if="coupon.premium" class="advertisement">Ad</span></h3>
             <p>{{coupon.title}}</p>
             <p>Distance: {{coupon.distance}} mile(s)</p>
             <ion-option-button class="button-balanced icon ion-android-favorite-outline" ng-click="addFavorite(coupon)"> Save</ion-option-button>            
-        </ion-item>                  
+        </ion-item>                
     </ion-list>     
   </ion-content>
   <ion-footer-bar class="bar-balanced" align-title="left">
-    <h1 class="title">Coupons <span class="badge badge-energized">{{(coupons|filter:'Service').length + (premiumCoupons|filter:'Service').length}}</span></h1>
+    <h1 class="title">Coupons <span class="badge badge-energized">{{(coupons|filter:'Service').length}}</span></h1>
 </ion-footer-bar>  
 </ion-view>
