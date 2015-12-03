@@ -46,7 +46,7 @@ angular.module('hawaiiqpon.favorites.controller', [])
           latitude: coupon.loc.lat,
           longitude: coupon.loc.long
         },
-        options: { draggable: false, icon: 'img/marker.png' }
+        options: { draggable: false, icon: 'img/pin.png' }
       };       
       
       $scope.modal.show();

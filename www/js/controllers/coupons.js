@@ -25,7 +25,7 @@ angular.module('hawaiiqpon.coupon.controller', [])
         latitude: coupon.loc.lat,
         longitude: coupon.loc.long
       },
-      options: { draggable: false}
+      options: { draggable: false, icon: 'img/pin.png' }
     };   
     uiGmapGoogleMapApi.then(function(maps) {
       $scope.modal.show();
@@ -70,7 +70,7 @@ angular.module('hawaiiqpon.coupon.controller', [])
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
           },
-          options: { draggable: false }
+          options: { draggable: false, icon: 'img/pin.png' }
         };
         
         Coupons.getCoupons().then(function(coupons){
