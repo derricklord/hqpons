@@ -17,6 +17,13 @@
 @import "scss/common/common.styles";
 @import "scss/side-menu/side-menu.styles";
 
+.wrapping-text{
+    overflow: initial;
+    white-space: initial;
+    width: 300px;
+    text-align: center;
+}
+
 .offer-text{
     color: #1c5f30; 
     font-weight: 300; 

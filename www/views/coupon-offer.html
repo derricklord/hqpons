@@ -1,4 +1,4 @@
-  <ion-modal-view>
+  <ion-modal-view cache-view="false">
   <div class="list card" style="border-radius:6px; padding: 5px;">
     <div class="item item-image" style="height: 220px;">
       <ui-gmap-google-map center='map.center' zoom='map.zoom'>
@@ -9,14 +9,15 @@
   
  
     <ion-slide-box class="item item-body"  style="background-color: #256a31; color:white; height: 150px;" on-slide-changed="slideHasChanged($index)">
-      <ion-slide style="padding: 5px;">
-          <h2 style="color: white;" class="vertical-center text-center">{{offer.desc}}</h2>
+      <ion-slide style="padding: 5px;" >
+          <h2 style="color: white;" class="vertical-center text-center wrapping-text">{{offer.desc}}</h2>
       </ion-slide>
       <ion-slide style="padding: 5px;">
-          <h2 style="color: white;" class="vertical-center text-center">{{offer.desc2}} </h2>
+          <h2 style="color: white;" class="vertical-center text-center wrapping-text">{{offer.desc2}} </h2>
       </ion-slide>
       <ion-slide style="padding: 5px;">
-         <h2 style="color: white;" class="vertical-center text-center">CODE: {{offer.promo_code}}</h2>
+         <h2 style="color: white;" class="vertical-center text-center wrapping-text">CODE: {{offer.promo_code}}</h2>
+         <barcode type="code128c" string="22" options="options"></barcode><br>
       </ion-slide>
     </ion-slide-box>     
       
@@ -26,7 +27,7 @@
       <h4 class="vertical-center text-center offer-text">{{offer.address}}</h4>
         <div class="button-bar">
           <a class="button button-calm" href="tel:{{offer.vendor_phone}}" target="_blank"><i class="icon ion-ios-telephone offer-icon"></i></a>
-          <a class="button button-calm" href="#" ng-click="launch(offer.vendor_url)"><i class="icon ion-earth offer-icon"></i></a>
+          <a id="launch" class="button button-calm" href="{{offer.vendor_url}}" target="_blank"><i class="icon ion-earth offer-icon"></i></a>
           <a class="button button-calm" href="#" ng-click="addFavorite(offer)"><i class="icon ion-android-favorite-outline offer-icon"></i></a>
         </div>        
         <button class="button button-full button-balanced" ng-click="closeOffer()">

@@ -8,18 +8,31 @@
     <link href="https://fonts.googleapis.com/css?family=Lato%3A100italic" rel="stylesheet" type="text/css">
    <link href="css/ionic.app.css" rel="stylesheet">
 
+ 
+    <script>
+        document.onclick = function (e) {
+            e = e ||  window.event;
+            var element = e.target || e.srcElement;
+            //console.log(element.id);
+            if (element.id == 'launch') {
+                window.open(element.href, "_blank", "location=yes");
+                return false;
+            }
+        };
+    </script>   
     
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
     <script src="lib/lodash/lodash.min.js"></script>
     <script src="lib/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
     <script src="lib/angular-local-storage/dist/angular-local-storage.min.js"></script>
+    <script src="lib/angular-barcode/dist/barcode.min.js"></script>
     
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
     
     
-    <script src="http://maps.google.com/maps/api/js?key=AIzaSyCi6-BkMnMsUCYWSSRwRtuToF5km_w7jmw&amp"></script>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyCi6-BkMnMsUCYWSSRwRtuToF5km_w7jmw&amp;&quot;"></script>
     <script src="lib/angular-google-maps/dist/angular-google-maps.min.js"></script>
 
      

@@ -10,6 +10,7 @@
     "ngCordova": "~0.1.22-alpha",
     "angular-google-maps": "~2.2.1",
     "angular-local-storage": "~0.2.3",
-    "ngmap": "~1.14.15"
+    "ngmap": "~1.14.15",
+    "angular-barcode": "~0.0.1"
   }
 }

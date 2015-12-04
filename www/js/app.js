@@ -21,7 +21,7 @@ angular.module('hawaiiqpon', [
     coupons: [],
     offer:{}
 })
-.run(function($ionicPlatform, $rootScope, Settings, localStorageService, $timeout, $ionicLoading) {
+.run(function($ionicPlatform, $rootScope, $cordovaSplashscreen ,Settings, localStorageService, $timeout, $ionicLoading) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -46,12 +46,7 @@ angular.module('hawaiiqpon', [
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
-        //    key: 'your api key',
-        v: '3.20', //defaults to latest 3.X anyhow
-        libraries: 'weather,geometry,visualization'
-    });  
+.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('app', {
     url: "/app",
@@ -118,12 +113,6 @@ angular.module('hawaiiqpon', [
       }
     }
   })  
-  
- 	.state('details', {
-		url: "/details/:id",
-		templateUrl: 'views/details.html',
-		controller: 'detailsCtrl'
-	})
   
   .state('favorites', {
     url: "/favorites",
