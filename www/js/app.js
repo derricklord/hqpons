@@ -7,7 +7,7 @@ angular.module('hawaiiqpon', [
   'hawaiiqpon.common.filters',
   'hawaiiqpon.coupon.service',
   'hawaiiqpon.coupon.controller',
-  'hawaiiqpon.details.controller',
+  'hawaiiqpon.home.controller',
   'hawaiiqpon.favorites.controller',
   'hawaiiqpon.sidemenu.controller',  
   'hawaiiqpon.geolocation'
@@ -48,6 +48,8 @@ angular.module('hawaiiqpon', [
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
+  
+
   .state('app', {
     url: "/app",
     abstract: true,
@@ -126,7 +128,7 @@ angular.module('hawaiiqpon', [
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/main/all');
+  $urlRouterProvider.otherwise('/app.main.all');
    //$urlRouterProvider.otherwise('/splash');
 
 })
